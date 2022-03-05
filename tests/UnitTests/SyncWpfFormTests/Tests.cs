@@ -34,16 +34,3 @@ public abstract class Tests
         wrappedObject.SomeInteger.Should().Be(expected);
     }
 }
-
-public class SampleBaseSyncWpfFormTests : Tests
-{
-    protected override SampleBaseSyncWpfForm CreateSut(object wrappedObject)
-    {
-        return new SampleBaseSyncWpfForm(wrappedObject);
-    }
-
-    protected override SampleBackingObject CreateWrappedObject()
-    {
-        return new SampleBackingObject();
-    }
-}
