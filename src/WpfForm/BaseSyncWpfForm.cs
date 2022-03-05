@@ -21,6 +21,7 @@ public abstract class BaseSyncWpfForm
             var propertyInfo = _store.GetType().GetProperty(unsavedValue.Key);
             propertyInfo.SetValue(_store, unsavedValue.Value);
         }
+        _unsavedValues.Clear();
     }
 
     protected void SetProperty(object value, [CallerMemberName] string propertyName = null)
