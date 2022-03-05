@@ -31,6 +31,17 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeTrue();
     }
+    
+    [Fact]
+    public void IsDirty_When_Reference_Property_Changed()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.SomeString = "zen";
+
+        sut.IsDirty.Should().BeTrue();
+    }
 
     [Fact]
     public void Accepted_Changed_Value_Property_Successful_Updates_Wrapped_Object()
