@@ -47,16 +47,3 @@ public class SampleBaseSyncWpfFormTests : Tests
         return new SampleBackingObject();
     }
 }
-
-public class SampleBaseSyncWpfForm : BaseSyncWpfForm
-{
-    public SampleBaseSyncWpfForm(object wrapped) : base(wrapped)
-    {
-    }
-
-    public int SomeInteger
-    {
-        get => 1;
-        set => SetProperty(value);
-    }
-}
