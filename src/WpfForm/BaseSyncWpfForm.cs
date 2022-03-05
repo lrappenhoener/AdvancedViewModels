@@ -11,6 +11,8 @@ public abstract class BaseSyncWpfForm
     {
         _store = store;
     }
+
+    public bool IsDirty => _unsavedValues.Any();
     
     public void AcceptChanges()
     {
