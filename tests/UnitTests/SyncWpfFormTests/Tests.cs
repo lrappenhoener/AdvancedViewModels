@@ -33,6 +33,15 @@ public abstract class Tests
     }
     
     [Fact]
+    public void IsDirty_Is_False_Initially()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
+    [Fact]
     public void IsDirty_When_Reference_Property_Changed()
     {
         var wrappedObject = CreateWrappedObject();
