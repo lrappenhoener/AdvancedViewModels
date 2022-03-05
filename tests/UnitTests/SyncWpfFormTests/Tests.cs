@@ -20,6 +20,17 @@ public abstract class Tests
 
         wrappedObject.SomeInteger.Should().Be(original);
     }
+    
+    [Fact]
+    public void IsDirty_When_Value_Property_Changed()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.SomeInteger++;
+
+        sut.IsDirty.Should().BeTrue();
+    }
 
     [Fact]
     public void Accepted_Changed_Value_Property_Successful_Updates_Wrapped_Object()
