@@ -33,4 +33,17 @@ public abstract class Tests
 
         wrappedObject.SomeInteger.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Accepted_Changed_Reference_Property_Successful_Updates_Wrapped_Object()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = "zen";
+
+        sut.SomeString = expected;
+        sut.AcceptChanges();
+
+        wrappedObject.SomeString.Should().Be(expected);
+    }
 }
