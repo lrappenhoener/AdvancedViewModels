@@ -8,4 +8,8 @@
         <LangVersion>10</LangVersion>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Nulls" Version="1.0.1" />
+    </ItemGroup>
+
 </Project>
