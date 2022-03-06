@@ -44,6 +44,18 @@ public abstract class Tests
         sut.IsDirty.Should().BeFalse();
     }
     
+    [Fact]
+    public void IsDirty_Is_False_When_Value_Property_Changed_And_Rejected()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.SomeInteger++;
+        sut.RejectChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
     [Fact]  
     public void IsDirty_Is_False_Initially()
     {
