@@ -51,6 +51,24 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Fires_When_Reference_Property_Changed()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeString))
+                return;
+            invoked = true;
+        };
+
+        sut.SomeString = "zen";
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void IsDirty_Is_False_When_Value_Property_Changed_And_Accepted()
     {
         var wrappedObject = CreateWrappedObject();
