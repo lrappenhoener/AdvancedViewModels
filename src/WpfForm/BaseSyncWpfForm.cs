@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using PCC.Libs.Nulls;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
@@ -32,5 +33,11 @@ public abstract class BaseSyncWpfForm
     public void RejectChanges()
     {
         _unsavedValues.Clear();
+    }
+
+    protected Maybe<object> GetProperty([CallerMemberName] string propertyName = null)
+    {
+        var value = _unsavedValues[propertyName];
+        return value != null ? Maybe.Some(value) : Maybe.None<object>();
     }
 }
