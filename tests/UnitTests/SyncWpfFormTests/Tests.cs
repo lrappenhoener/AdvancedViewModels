@@ -101,6 +101,18 @@ public abstract class Tests
     }
     
     [Fact]
+    public void Get_Correct_Reference_Property()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = "zen";
+
+        sut.SomeString = expected;
+        
+        sut.SomeString.Should().Be(expected);
+    }
+    
+    [Fact]
     public void Accepted_Changed_Value_Property_Successful_Updates_Wrapped_Object()
     {
         var wrappedObject = CreateWrappedObject();
