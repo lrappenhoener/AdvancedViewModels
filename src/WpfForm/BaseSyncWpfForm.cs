@@ -37,7 +37,21 @@ public abstract class BaseSyncWpfForm
 
     protected Maybe<object> GetProperty([CallerMemberName] string propertyName = null)
     {
-        var value = _unsavedValues[propertyName];
-        return value != null ? Maybe.Some(value) : Maybe.None<object>();
+        var maybeValue = GetPropertyFromUnsavedValues(propertyName);
+        return maybeValue.HasValue ? maybeValue : GetPropertyFromStore(propertyName);
+    }
+
+    private Maybe<object> GetPropertyFromStore(string propertyName)
+    {
+        var propertyInfo = _store.GetType().GetProperty(propertyName);
+        var value = propertyInfo.GetValue(_store);
+        return Maybe.Some<object>(value);
+    }
+
+    private Maybe<object> GetPropertyFromUnsavedValues(string propertyName)
+    {
+        return _unsavedValues.ContainsKey(propertyName)
+            ? Maybe.Some<object>(_unsavedValues[propertyName])
+            : Maybe.None<object>();
     }
 }
