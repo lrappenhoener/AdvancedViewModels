@@ -9,6 +9,6 @@ public class SampleBaseSyncWpfFormTests : Tests
 
     protected override SampleBackingObject CreateWrappedObject()
     {
-        return new SampleBackingObject();
+        return new SampleBackingObject(0);
     }
 }

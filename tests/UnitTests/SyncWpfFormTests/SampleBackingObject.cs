@@ -2,12 +2,10 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 
 public class SampleBackingObject
 {
-    private static int _depth = 0;
-    public SampleBackingObject()
+    public SampleBackingObject(int depth)
     {
-        _depth++;
-        if (_depth > 2) return;
-        SomeComplex = new SampleBaseSyncWpfForm(new SampleBackingObject
+        if (depth > 2) return;
+        SomeComplex = new SampleBaseSyncWpfForm(new SampleBackingObject(depth + 1)
         {
             SomeInteger = 1977,
             SomeString = "Birthday"
