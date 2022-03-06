@@ -89,6 +89,18 @@ public abstract class Tests
     }
 
     [Fact]
+    public void Get_Correct_Value_Property()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = 77;
+
+        sut.SomeInteger = expected;
+        
+        sut.SomeInteger.Should().Be(expected);
+    }
+    
+    [Fact]
     public void Accepted_Changed_Value_Property_Successful_Updates_Wrapped_Object()
     {
         var wrappedObject = CreateWrappedObject();
