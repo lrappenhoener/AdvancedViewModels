@@ -56,6 +56,18 @@ public abstract class Tests
         sut.IsDirty.Should().BeFalse();
     }
     
+    [Fact]
+    public void IsDirty_Is_False_When_Reference_Property_Changed_And_Rejected()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.SomeString = "zen";
+        sut.RejectChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
     [Fact]  
     public void IsDirty_Is_False_Initially()
     {
