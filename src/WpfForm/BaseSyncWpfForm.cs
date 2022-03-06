@@ -28,4 +28,9 @@ public abstract class BaseSyncWpfForm
     {
         _unsavedValues.Add(propertyName, value);
     }
+
+    public void RejectChanges()
+    {
+        _unsavedValues.Clear();
+    }
 }
