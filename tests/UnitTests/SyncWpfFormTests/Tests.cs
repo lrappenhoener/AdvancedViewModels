@@ -88,6 +88,27 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Fires_Only_One_Time_When_Updated_And_Old_Complex_Property_Both_Mutate()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var old = sut.SomeComplex;
+        sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject());
+        var invoked = 0;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeComplex))
+                return;
+            invoked++;
+        };
+
+        old.SomeInteger++;
+        sut.SomeComplex.SomeInteger++;
+
+        invoked.Should().Be(1);
+    }
+    
+    [Fact]
     public void PropertyChanged_Fires_When_Reference_Property_Changed()
     {
         var wrappedObject = CreateWrappedObject();
