@@ -8,7 +8,7 @@ public class SampleBaseSyncWpfForm : BaseSyncWpfForm
 
     public int SomeInteger
     {
-        get => (int)GetProperty();
+        get => (int)GetProperty().Value;
         set => SetProperty(value);
     }
 
