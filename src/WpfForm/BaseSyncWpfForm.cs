@@ -1,9 +1,10 @@
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using PCC.Libs.Nulls;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-public abstract class BaseSyncWpfForm
+public abstract class BaseSyncWpfForm : INotifyPropertyChanged
 {
     private readonly Dictionary<string, object> _unsavedValues = new Dictionary<string, object>();
 
@@ -11,7 +12,9 @@ public abstract class BaseSyncWpfForm
     {
         Store = store;
     }
-
+    
+    public event PropertyChangedEventHandler? PropertyChanged;
+    
     public bool IsDirty => _unsavedValues.Any();
 
     protected object Store { get; }
@@ -28,7 +31,13 @@ public abstract class BaseSyncWpfForm
 
     protected void SetProperty(object value, [CallerMemberName] string propertyName = null)
     {
+        FirePropertyChanged(propertyName);
         _unsavedValues.Add(propertyName, value);
+    }
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public void RejectChanges()
@@ -54,5 +63,10 @@ public abstract class BaseSyncWpfForm
         return _unsavedValues.ContainsKey(propertyName)
             ? Maybe.Some<object>(_unsavedValues[propertyName])
             : Maybe.None<object>();
+    }
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
