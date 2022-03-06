@@ -94,18 +94,17 @@ public abstract class Tests
         var sut = CreateSut(wrappedObject);
         var old = sut.SomeComplex;
         sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject());
-        var invoked = 0;
+        var invoked = false;
         sut.PropertyChanged += (o, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
-            invoked++;
+            invoked = true;
         };
 
         old.SomeInteger++;
-        sut.SomeComplex.SomeInteger++;
 
-        invoked.Should().Be(1);
+        invoked.Should().BeFalse();
     }
     
     [Fact]
