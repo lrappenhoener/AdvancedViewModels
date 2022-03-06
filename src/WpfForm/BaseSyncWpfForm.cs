@@ -55,6 +55,11 @@ public abstract class BaseSyncWpfForm : INotifyPropertyChanged
         if (value is INotifyPropertyChanged complexValue)
         {
             var propertyInfo = Store.GetType().GetProperty(propertyName);
+            if (_registeredChangeListeners.ContainsKey(propertyInfo))
+            {
+                var oldRegistration = _registeredChangeListeners[propertyInfo];
+                oldRegistration.Item1.PropertyChanged -= oldRegistration.Item2;
+            }
             var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(propertyName));
             _registeredChangeListeners[propertyInfo] = Tuple.Create<INotifyPropertyChanged, PropertyChangedEventHandler>(complexValue, handler);
             complexValue.PropertyChanged += handler;
