@@ -14,7 +14,7 @@ public class SampleBaseSyncWpfForm : BaseSyncWpfForm
 
     public string SomeString
     {
-        get => "";
+        get => (string)GetProperty().Value;
         set => SetProperty(value);
     }
 }
