@@ -305,4 +305,17 @@ public abstract class Tests
 
         sut.SomeReference.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Rejected_Changed_Value_Property_Successful_Reset_Changes()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = sut.SomeInteger;
+
+        sut.SomeInteger++;
+        sut.RejectChanges();
+
+        sut.SomeInteger.Should().Be(expected);
+    }
 }
