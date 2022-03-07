@@ -289,4 +289,17 @@ public abstract class Tests
 
         sut.SomeComplex.SomeInteger.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Rejected_Changed_Reference_Property_Successful_Reset_Changes()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = sut.SomeReference;
+
+        sut.SomeReference = new object();
+        sut.RejectChanges();
+
+        sut.SomeReference.Should().Be(expected);
+    }
 }
