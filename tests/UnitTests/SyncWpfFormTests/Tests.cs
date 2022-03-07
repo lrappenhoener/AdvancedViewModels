@@ -276,4 +276,17 @@ public abstract class Tests
 
         childWrappedObject.SomeInteger.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Rejected_Changed_Complex_Property_Successful_Reset_Changes()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var expected = sut.SomeComplex.SomeInteger;
+
+        sut.SomeComplex.SomeInteger++;
+        sut.RejectChanges();
+
+        sut.SomeComplex.SomeInteger.Should().Be(expected);
+    }
 }
