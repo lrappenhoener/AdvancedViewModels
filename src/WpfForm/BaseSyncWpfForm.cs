@@ -34,6 +34,7 @@ public abstract class BaseSyncWpfForm : INotifyPropertyChanged
     private void RegisterComplexProperty(string complexPropertyName, INotifyPropertyChanged propertyInstance)
     {
         var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(complexPropertyName));
+        if (propertyInstance == null) return;
         propertyInstance.PropertyChanged += handler;
         _complexPropertyHandlers.Add(complexPropertyName, handler);
     }
