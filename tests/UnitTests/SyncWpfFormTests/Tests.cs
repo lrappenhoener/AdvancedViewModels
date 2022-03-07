@@ -69,6 +69,26 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Does_Not_Fire_When_Current_Complex_Property_Null_And_Previous_Complex_Property_Mutates()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        var invoked = false;
+        var old = sut.SomeComplex;
+        sut.SomeComplex = null;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeComplex))
+                return;
+            invoked = true;
+        };
+
+        old.SomeInteger++;
+
+        invoked.Should().BeFalse();
+    }
+    
+    [Fact]
     public void PropertyChanged_Fires_When_Updated_Complex_Property_Mutates()
     {
         var wrappedObject = CreateWrappedObject();
