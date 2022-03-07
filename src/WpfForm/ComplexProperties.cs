@@ -19,6 +19,12 @@ internal class ComplexProperties : ITrackChanges
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
     public void AcceptChanges()
     {
+        var dirtyProperties = _complexPropertyRegistrations.Where(cpr => cpr.Value.Target.IsDirty)
+            .Select(cpr => cpr.Value.Target);
+        foreach (var dirtyProperty in dirtyProperties)
+        {
+            dirtyProperty.AcceptChanges();
+        }
     }
 
     public void RejectChanges()
