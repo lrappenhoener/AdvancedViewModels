@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-internal class ComplexProperties : INotifyPropertyChanged
+internal class ComplexProperties : ITrackChanges
 {
     private readonly Dictionary<string, PropertyInfo> _complexPropertyInfos;
     private readonly Dictionary<string, ComplexPropertyRegistration>
@@ -16,19 +16,27 @@ internal class ComplexProperties : INotifyPropertyChanged
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;
-    
+    public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
+    public void AcceptChanges()
+    {
+    }
+
+    public void RejectChanges()
+    {
+    }
+
     public void RegisterAllComplexPropertiesFrom(object store)
     {
         foreach (var complexPropertyInfoEntry in _complexPropertyInfos)
         {
             var complexPropertyName = complexPropertyInfoEntry.Key;
-            var complexPropertyInstance = GetValueByReflection(complexPropertyName, store) as INotifyPropertyChanged;
+            var complexPropertyInstance = GetValueByReflection(complexPropertyName, store) as ITrackChanges;
             if (complexPropertyInstance == null) continue;
             RegisterComplexProperty(complexPropertyName, complexPropertyInstance);
         }
     }
     
-    private void RegisterComplexProperty(string complexPropertyName, INotifyPropertyChanged complexPropertyInstance)
+    private void RegisterComplexProperty(string complexPropertyName, ITrackChanges complexPropertyInstance)
     {
         if (complexPropertyInstance == null) return;
         var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(complexPropertyName));
@@ -40,7 +48,7 @@ internal class ComplexProperties : INotifyPropertyChanged
     {
         if (RegistrationExists(complexPropertyName))
             UnregisterComplexProperty(complexPropertyName);
-        var complexPropertyInstance = value as INotifyPropertyChanged;
+        var complexPropertyInstance = value as ITrackChanges;
         RegisterComplexProperty(complexPropertyName, complexPropertyInstance);
     }
     
@@ -68,7 +76,7 @@ internal class ComplexProperties : INotifyPropertyChanged
 
     private Dictionary<string, PropertyInfo> FilterComplexPropertyInfos(Type storeType)
     {
-        return new Dictionary<string, PropertyInfo>(storeType.GetProperties().Where(p => p.PropertyType.GetInterface(nameof(INotifyPropertyChanged)) != null).Select(p => new KeyValuePair<string,PropertyInfo>(p.Name, p)));
+        return new Dictionary<string, PropertyInfo>(storeType.GetProperties().Where(p => p.PropertyType.GetInterface(nameof(ITrackChanges)) != null).Select(p => new KeyValuePair<string,PropertyInfo>(p.Name, p)));
     }
 
     private void FirePropertyChanged(string propertyName)

@@ -4,7 +4,7 @@ using PCC.Libs.Nulls;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-public abstract class BaseSyncWpfForm : INotifyPropertyChanged
+public abstract class BaseSyncWpfForm : ITrackChanges
 {
     private readonly Dictionary<string, object> _unsavedValues = new Dictionary<string, object>();
     private readonly ComplexProperties _complexProperties;
@@ -19,7 +19,7 @@ public abstract class BaseSyncWpfForm : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
     
-    public bool IsDirty => _unsavedValues.Any();
+    public bool IsDirty => _unsavedValues.Any() || _complexProperties.IsDirty;
 
     protected object Store { get; }
 
