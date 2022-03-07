@@ -8,11 +8,11 @@ public class SampleBackingObject
         SomeComplex = new SampleBaseSyncWpfForm(new SampleBackingObject(depth + 1)
         {
             SomeInteger = 1977,
-            SomeString = "Birthday"
+            SomeReference = new object()
         });
     }
     
     public int SomeInteger { get; set; } = 42;
-    public string SomeString { get; set; } = "nobody";
+    public object SomeReference { get; set; } = new object();
     public SampleBaseSyncWpfForm SomeComplex { get; set; } 
 }

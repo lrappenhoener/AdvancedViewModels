@@ -146,12 +146,12 @@ public abstract class Tests
         var invoked = false;
         sut.PropertyChanged += (o, e) =>
         {
-            if (e.PropertyName != nameof(sut.SomeString))
+            if (e.PropertyName != nameof(sut.SomeReference))
                 return;
             invoked = true;
         };
 
-        sut.SomeString = "zen";
+        sut.SomeReference = new object();
 
         invoked.Should().BeTrue();
     }
@@ -186,7 +186,7 @@ public abstract class Tests
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
 
-        sut.SomeString = "zen";
+        sut.SomeReference = new object();
         sut.RejectChanges();
 
         sut.IsDirty.Should().BeFalse();
@@ -207,7 +207,7 @@ public abstract class Tests
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
 
-        sut.SomeString = "zen";
+        sut.SomeReference = new object();
 
         sut.IsDirty.Should().BeTrue();
     }
@@ -229,11 +229,11 @@ public abstract class Tests
     {
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        var expected = "zen";
+        var expected = new object();
 
-        sut.SomeString = expected;
+        sut.SomeReference = expected;
         
-        sut.SomeString.Should().Be(expected);
+        sut.SomeReference.Should().Be(expected);
     }
     
     [Fact]
@@ -254,12 +254,12 @@ public abstract class Tests
     {
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        var expected = "zen";
+        var expected = new object();
 
-        sut.SomeString = expected;
+        sut.SomeReference = expected;
         sut.AcceptChanges();
 
-        wrappedObject.SomeString.Should().Be(expected);
+        wrappedObject.SomeReference.Should().Be(expected);
     }
     
     [Fact]

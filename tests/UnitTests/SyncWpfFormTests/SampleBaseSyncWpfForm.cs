@@ -12,9 +12,9 @@ public class SampleBaseSyncWpfForm : BaseSyncWpfForm
         set => SetProperty(value);
     }
 
-    public string SomeString
+    public object SomeReference
     {
-        get => (string)GetProperty().Value;
+        get => GetProperty().Value;
         set => SetProperty(value);
     }
 
