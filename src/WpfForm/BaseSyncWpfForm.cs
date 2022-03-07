@@ -15,10 +15,10 @@ public abstract class BaseSyncWpfForm : INotifyPropertyChanged
     protected BaseSyncWpfForm(object store)
     {
         Store = store;
-        ListenForChangesInStore();
+        HookPropertyChangeProperties();
     }
 
-    private void ListenForChangesInStore()
+    private void HookPropertyChangeProperties()
     {
         var propertiesThatInformChanges = Store.GetType().GetProperties().Where(p => p.PropertyType.GetInterface(nameof(INotifyPropertyChanged)) != null);
         foreach (var propertyThatInformChanges in propertiesThatInformChanges)
