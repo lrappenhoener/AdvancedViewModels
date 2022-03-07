@@ -30,6 +30,7 @@ public abstract class BaseSyncWpfForm : ITrackChanges
             var propertyInfo = Store.GetType().GetProperty(unsavedValue.Key);
             propertyInfo.SetValue(Store, unsavedValue.Value);
         }
+        _complexProperties.AcceptChanges();
         _unsavedValues.Clear();
     }
 
