@@ -29,6 +29,12 @@ internal class ComplexProperties : ITrackChanges
 
     public void RejectChanges()
     {
+        var dirtyProperties = _complexPropertyRegistrations.Where(cpr => cpr.Value.Target.IsDirty)
+            .Select(cpr => cpr.Value.Target);
+        foreach (var dirtyProperty in dirtyProperties)
+        {
+            dirtyProperty.RejectChanges();
+        }
     }
 
     public void RegisterAllComplexPropertiesFrom(object store)

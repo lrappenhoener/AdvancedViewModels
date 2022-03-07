@@ -49,6 +49,7 @@ public abstract class BaseSyncWpfForm : ITrackChanges
 
     public void RejectChanges()
     {
+        _complexProperties.RejectChanges();
         _unsavedValues.Clear();
     }
 
