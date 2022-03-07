@@ -261,4 +261,19 @@ public abstract class Tests
 
         wrappedObject.SomeString.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Accepted_Changed_Complex_Property_Successful_Updates_Wrapped_Object()
+    {
+        var childWrappedObject = CreateWrappedObject();
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        sut.SomeComplex = new SampleBaseSyncWpfForm(childWrappedObject);
+        var expected = sut.SomeComplex.SomeInteger + 1;
+
+        sut.SomeComplex.SomeInteger++;
+        sut.AcceptChanges();
+
+        childWrappedObject.SomeInteger.Should().Be(expected);
+    }
 }
