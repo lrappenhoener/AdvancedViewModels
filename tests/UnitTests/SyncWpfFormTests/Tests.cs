@@ -282,12 +282,15 @@ public abstract class Tests
     {
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        var expected = sut.SomeComplex.SomeInteger;
+        var expectedValue = sut.SomeComplex.SomeInteger;
+        var expectedReference = sut.SomeComplex.SomeReference;
 
         sut.SomeComplex.SomeInteger++;
+        sut.SomeComplex.SomeReference = new object();
         sut.RejectChanges();
 
-        sut.SomeComplex.SomeInteger.Should().Be(expected);
+        sut.SomeComplex.SomeInteger.Should().Be(expectedValue);
+        sut.SomeComplex.SomeReference.Should().Be(expectedReference);
     }
     
     [Fact]
