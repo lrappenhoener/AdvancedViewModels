@@ -33,6 +33,17 @@ public abstract class Tests
     }
     
     [Fact]
+    public void IsDirty_When_Complex_Property_Mutated()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+
+        sut.SomeComplex.SomeInteger++;
+
+        sut.IsDirty.Should().BeTrue();
+    }
+    
+    [Fact]
     public void PropertyChanged_Fires_When_Value_Property_Changed()
     {
         var wrappedObject = CreateWrappedObject();
