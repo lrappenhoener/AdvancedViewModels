@@ -7,30 +7,40 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 
 public abstract class BaseSyncWpfForm : INotifyPropertyChanged
 {
-    private readonly Dictionary<PropertyInfo, Tuple<INotifyPropertyChanged, PropertyChangedEventHandler>>
-        _registeredChangeListeners =
-            new Dictionary<PropertyInfo, Tuple<INotifyPropertyChanged, PropertyChangedEventHandler>>();
+    private Dictionary<string, PropertyInfo> _complexPropertyInfos;
+    private readonly Dictionary<string, PropertyChangedEventHandler>
+        _complexPropertyHandlers =
+            new Dictionary<string, PropertyChangedEventHandler>();
     private readonly Dictionary<string, object> _unsavedValues = new Dictionary<string, object>();
 
     protected BaseSyncWpfForm(object store)
     {
         Store = store;
-        HookPropertyChangeProperties();
+        RegisterComplexProperties(store);
     }
 
-    private void HookPropertyChangeProperties()
+    private void RegisterComplexProperties(object store)
     {
-        var propertiesThatInformChanges = Store.GetType().GetProperties().Where(p => p.PropertyType.GetInterface(nameof(INotifyPropertyChanged)) != null);
-        foreach (var propertyThatInformChanges in propertiesThatInformChanges)
+        _complexPropertyInfos = FilterComplexPropertyInfos(store);
+        foreach (var complexPropertyInfoEntry in _complexPropertyInfos)
         {
-            if (!(propertyThatInformChanges.GetValue(Store) is INotifyPropertyChanged property)) continue;
-            var handler = new PropertyChangedEventHandler((o, e) =>
-            {
-                FirePropertyChanged(propertyThatInformChanges.Name);
-            });
-            property.PropertyChanged += handler;
-            _registeredChangeListeners.Add(propertyThatInformChanges, Tuple.Create(property, handler));
+            var complexPropertyName = complexPropertyInfoEntry.Key;
+            var complexPropertyInstance = GetValueByReflection(complexPropertyName, store) as INotifyPropertyChanged;
+            if (complexPropertyInstance == null) continue;
+            RegisterComplexProperty(complexPropertyName, complexPropertyInstance);
         }
+    }
+
+    private void RegisterComplexProperty(string complexPropertyName, INotifyPropertyChanged propertyInstance)
+    {
+        var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(complexPropertyName));
+        propertyInstance.PropertyChanged += handler;
+        _complexPropertyHandlers.Add(complexPropertyName, handler);
+    }
+
+    private Dictionary<string, PropertyInfo> FilterComplexPropertyInfos(object store)
+    {
+        return new Dictionary<string, PropertyInfo>(store.GetType().GetProperties().Where(p => p.PropertyType.GetInterface(nameof(INotifyPropertyChanged)) != null).Select(p => new KeyValuePair<string,PropertyInfo>(p.Name, p)));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -51,20 +61,49 @@ public abstract class BaseSyncWpfForm : INotifyPropertyChanged
 
     protected void SetProperty(object value, [CallerMemberName] string propertyName = null)
     {
-        FirePropertyChanged(propertyName);
-        if (value is INotifyPropertyChanged complexValue)
-        {
-            var propertyInfo = Store.GetType().GetProperty(propertyName);
-            if (_registeredChangeListeners.ContainsKey(propertyInfo))
-            {
-                var oldRegistration = _registeredChangeListeners[propertyInfo];
-                oldRegistration.Item1.PropertyChanged -= oldRegistration.Item2;
-            }
-            var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(propertyName));
-            _registeredChangeListeners[propertyInfo] = Tuple.Create<INotifyPropertyChanged, PropertyChangedEventHandler>(complexValue, handler);
-            complexValue.PropertyChanged += handler;
-        }
+        if (IsComplexProperty(propertyName))
+            RefreshComplexProperty(propertyName, value);
         _unsavedValues.Add(propertyName, value);
+        FirePropertyChanged(propertyName);
+    }
+
+    private void RefreshComplexProperty(string complexPropertyName, object value)
+    {
+        if (OldHandlerExists(complexPropertyName))
+            UnregisterComplexProperty(complexPropertyName);
+        var complexPropertyInstance = value as INotifyPropertyChanged;
+        RegisterComplexProperty(complexPropertyName, complexPropertyInstance);
+    }
+
+    private void UnregisterComplexProperty(string complexPropertyName)
+    {
+        var oldPropertyHandler = _complexPropertyHandlers[complexPropertyName];
+        var oldPropertyInstance = GetOldPropertyInstance(complexPropertyName);
+        if (oldPropertyInstance != null)
+            oldPropertyInstance.PropertyChanged -= oldPropertyHandler;
+        _complexPropertyHandlers.Remove(complexPropertyName);
+    }
+
+    private INotifyPropertyChanged GetOldPropertyInstance(string propertyName)
+    {
+        return _unsavedValues.ContainsKey(propertyName)
+            ? _unsavedValues[propertyName] as INotifyPropertyChanged
+            : GetValueByReflection(propertyName, Store) as INotifyPropertyChanged;
+    }
+
+    private object GetValueByReflection(string propertyName, object instance)
+    {
+        return _complexPropertyInfos[propertyName].GetValue(instance);
+    }
+
+    private bool OldHandlerExists(string propertyName)
+    {
+        return _complexPropertyHandlers.ContainsKey(propertyName);
+    }
+
+    private bool IsComplexProperty(string propertyName)
+    {
+        return _complexPropertyInfos.ContainsKey(propertyName);
     }
 
     private void FirePropertyChanged(string propertyName)
