@@ -171,17 +171,21 @@ public abstract class Tests
     }
 
     [Fact]
-    public void Returns_Correct_Element_After_Replacing_And_AcceptChanges_And_RejectChanges()
+    public void Returns_Correct_Elements_After_Changing_Elements_And_AcceptChanges_And_RejectChanges()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var expected = CreateElement();
-        sut[3] = expected;
-
+        Add_Insert_Replace_Remove_Elements(sut);
+        var expectedElements = new List<SampleBaseSyncWpfForm>(sut); 
+        
         sut.AcceptChanges();
         sut.RejectChanges();
-        
-        var returned = sut.ElementAt(3);
-        returned.Should().Be(expected);
+
+        for (int i = 0; i < sut.Count; i++)
+        {
+            var expected = expectedElements[i];
+            var returned = sut.ElementAt(i);
+            returned.Should().Be(expected);    
+        }
     }
 }
