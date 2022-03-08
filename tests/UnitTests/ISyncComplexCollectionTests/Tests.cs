@@ -46,15 +46,17 @@ public abstract class Tests
     }
 
     [Fact]
-    public void Returns_Correct_Initial_Element()
+    public void Returns_Correct_Initial_Elements()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var expected = elements.ElementAt(5);
 
-        var returned = sut.ElementAt(5);
-
-        returned.Should().Be(expected);
+        for (int i = 0; i < 10; i++)
+        {
+            var expected = elements.ElementAt(i);
+            var returned = sut.ElementAt(i);
+            returned.Should().Be(expected);    
+        }
     }
     
     [Fact]
@@ -71,18 +73,21 @@ public abstract class Tests
     }
     
     [Fact]
-    public void Returns_Correct_Element_After_Replacing_And_RejectChanges()
+    public void Returns_Correct_Elements_After_Replacing_And_RejectChanges()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var expected = sut[3];
         var newElement = CreateElement();
         sut[3] = newElement;
 
         sut.RejectChanges();
-        
-        var returned = sut.ElementAt(3);
-        returned.Should().Be(expected);
+
+        for (int i = 0; i < 10; i++)
+        {
+            var expected = sut[i];
+            var returned = sut.ElementAt(i);
+            returned.Should().Be(expected);
+        }
     }
     
     [Fact]
