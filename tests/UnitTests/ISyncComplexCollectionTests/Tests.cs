@@ -107,7 +107,7 @@ public abstract class Tests
     }
     
     [Fact]
-    public void NotDirty_When_Adding_Element_And_RejectChanges()
+    public void NotDirty_When_RejectChanges()
     {
         var sut = CreateSut();
         var element = CreateElement();
