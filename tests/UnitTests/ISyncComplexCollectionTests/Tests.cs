@@ -180,7 +180,27 @@ public abstract class Tests
             returned.Should().Be(expected);    
         }
     }
+
+    [Fact]
+    public void Count_Returns_Correct_Value()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+
+        sut.Count.Should().Be(10);
+    }
     
+    [Fact]
+    public void Clear_Successful_Removes_All_Elements()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        
+        sut.Clear();
+
+        sut.Any().Should().BeFalse();
+    }
+
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
