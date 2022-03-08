@@ -83,7 +83,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void Insert(int index, T item)
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.Insert(index, item);
     }
 
     public void RemoveAt(int index)
