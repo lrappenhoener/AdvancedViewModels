@@ -146,12 +146,14 @@ public abstract class Tests
     }
     
     [Fact]
-    public void Returns_Correct_Elements_After_Replacing_And_RejectChanges()
+    public void Returns_Correct_Elements_After_RejectChanges()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var newElement = CreateElement();
-        sut[3] = newElement;
+        sut[3] = CreateElement();
+        sut.Add(CreateElement());
+        sut.RemoveAt(9);
+        sut.Insert(2, CreateElement());
 
         sut.RejectChanges();
 
