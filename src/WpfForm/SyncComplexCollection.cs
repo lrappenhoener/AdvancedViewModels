@@ -9,6 +9,16 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
     private IEnumerable<T> _elements;
     private ObservableCollection<T> _unsavedElements = new ObservableCollection<T>();
+
+    public SyncComplexCollection() : this(new List<T>())
+    {
+        
+    }
+    public SyncComplexCollection(IEnumerable<T> source)
+    {
+        _elements = new List<T>(source);
+    }
+
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _unsavedElements.Any();
