@@ -61,7 +61,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public bool Contains(T item)
     {
-        throw new System.NotImplementedException();
+        return _unsavedElements.Contains(item);
     }
 
     public void CopyTo(T[] array, int arrayIndex)
