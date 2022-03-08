@@ -1,9 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests;
+namespace PCC.Datastructures.CSharp.WpfForm;
 
 public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
