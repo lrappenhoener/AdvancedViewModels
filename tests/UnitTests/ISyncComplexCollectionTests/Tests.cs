@@ -17,4 +17,15 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeFalse();
     }
+    
+    [Fact]
+    public void IsDirty_When_Adding_Element()
+    {
+        var sut = CreateSut();
+        var element = CreateElement();
+        
+        sut.Add(element);
+
+        sut.IsDirty.Should().BeTrue();
+    }
 }
