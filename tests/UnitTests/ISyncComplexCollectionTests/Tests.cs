@@ -84,4 +84,19 @@ public abstract class Tests
         var returned = sut.ElementAt(3);
         returned.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Returns_Correct_Element_After_Replacing_And_AcceptChanges_And_RejectChanges()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var expected = CreateElement();
+        sut[3] = expected;
+
+        sut.AcceptChanges();
+        sut.RejectChanges();
+        
+        var returned = sut.ElementAt(3);
+        returned.Should().Be(expected);
+    }
 }
