@@ -66,7 +66,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.CopyTo(array, arrayIndex);
     }
 
     public bool Remove(T item)
