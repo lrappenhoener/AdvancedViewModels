@@ -150,10 +150,7 @@ public abstract class Tests
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        sut[3] = CreateElement();
-        sut.Add(CreateElement());
-        sut.RemoveAt(9);
-        sut.Insert(2, CreateElement());
+        Add_Insert_Replace_Remove_Elements(sut);
 
         sut.RejectChanges();
 
@@ -164,7 +161,15 @@ public abstract class Tests
             returned.Should().Be(expected);
         }
     }
-    
+
+    private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
+    {
+        sut[3] = CreateElement();
+        sut.Add(CreateElement());
+        sut.RemoveAt(9);
+        sut.Insert(2, CreateElement());
+    }
+
     [Fact]
     public void Returns_Correct_Element_After_Replacing_And_AcceptChanges_And_RejectChanges()
     {
