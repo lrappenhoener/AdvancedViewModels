@@ -5,6 +5,6 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests
 
 public abstract class Tests
 {
-    public abstract SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut();
-    public abstract SampleBaseSyncWpfForm CreateElement();
+    protected abstract SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut();
+    protected abstract SampleBaseSyncWpfForm CreateElement();
 }

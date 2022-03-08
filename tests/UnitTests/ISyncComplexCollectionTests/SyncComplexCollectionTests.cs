@@ -4,12 +4,12 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests
 
 public class SyncComplexCollectionTests : Tests
 {
-    public override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut()
+    protected override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut()
     {
         return new SyncComplexCollection<SampleBaseSyncWpfForm>();
     }
 
-    public override SampleBaseSyncWpfForm CreateElement()
+    protected override SampleBaseSyncWpfForm CreateElement()
     {
         return new SampleBaseSyncWpfForm(new SampleBackingObject(0), 0);
     }
