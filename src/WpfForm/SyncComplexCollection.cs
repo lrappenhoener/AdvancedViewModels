@@ -14,7 +14,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public bool IsDirty => _unsavedElements.Any();
     public void AcceptChanges()
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.Clear();
     }
 
     public void RejectChanges()
