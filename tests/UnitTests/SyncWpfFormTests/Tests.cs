@@ -6,7 +6,7 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 
 public abstract class Tests
 {
-    protected abstract SampleBaseSyncWpfForm CreateSut(object wrappedObject);
+    protected abstract SampleBaseSyncWpfForm CreateSut(SampleBackingObject wrappedObject);
     protected abstract SampleBackingObject CreateWrappedObject();
 
     [Fact]
@@ -104,7 +104,7 @@ public abstract class Tests
     {
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject());
+        sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject(), 0);
         var invoked = false;
         sut.PropertyChanged += (o, e) =>
         {
@@ -124,7 +124,7 @@ public abstract class Tests
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
         var old = sut.SomeComplex;
-        sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject());
+        sut.SomeComplex = new SampleBaseSyncWpfForm(CreateWrappedObject(), 0);
         var invoked = false;
         sut.PropertyChanged += (o, e) =>
         {
@@ -268,7 +268,7 @@ public abstract class Tests
         var childWrappedObject = CreateWrappedObject();
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        sut.SomeComplex = new SampleBaseSyncWpfForm(childWrappedObject);
+        sut.SomeComplex = new SampleBaseSyncWpfForm(childWrappedObject, 0);
         var expected = sut.SomeComplex.SomeInteger + 1;
 
         sut.SomeComplex.SomeInteger++;

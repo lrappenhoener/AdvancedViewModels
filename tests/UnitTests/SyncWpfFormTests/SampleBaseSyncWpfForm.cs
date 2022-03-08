@@ -2,8 +2,10 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 
 public class SampleBaseSyncWpfForm : BaseSyncWpfForm
 {
-    public SampleBaseSyncWpfForm(object wrapped) : base(wrapped)
+    public SampleBaseSyncWpfForm(SampleBackingObject wrapped, int depth) : base(wrapped)
     {
+        if (depth > 2) return;
+        SomeComplex = new SampleBaseSyncWpfForm(wrapped.SomeComplex, depth + 1);
     }
 
     public int SomeInteger
@@ -20,7 +22,7 @@ public class SampleBaseSyncWpfForm : BaseSyncWpfForm
 
     public SampleBaseSyncWpfForm SomeComplex
     {
-        get => (SampleBaseSyncWpfForm)GetProperty().Value;
-        set => SetProperty(value);
+        get => GetComplexProperty<SampleBaseSyncWpfForm>();
+        set => SetComplexProperty(value);
     }
 }

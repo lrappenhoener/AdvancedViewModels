@@ -2,9 +2,9 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 
 public class SampleBaseSyncWpfFormTests : Tests
 {
-    protected override SampleBaseSyncWpfForm CreateSut(object wrappedObject)
+    protected override SampleBaseSyncWpfForm CreateSut(SampleBackingObject wrappedObject)
     {
-        return new SampleBaseSyncWpfForm(wrappedObject);
+        return new SampleBaseSyncWpfForm(wrappedObject, 0);
     }
 
     protected override SampleBackingObject CreateWrappedObject()

@@ -4,7 +4,7 @@ using PCC.Libs.Nulls;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-public abstract class BaseSyncWpfForm : ITrackChanges
+public abstract class BaseSyncWpfForm : IComplexProperty
 {
     private readonly Dictionary<string, object> _unsavedValues = new Dictionary<string, object>();
     private readonly ComplexProperties _complexProperties;
@@ -12,9 +12,8 @@ public abstract class BaseSyncWpfForm : ITrackChanges
     protected BaseSyncWpfForm(object store)
     {
         Store = store;
-        _complexProperties = new ComplexProperties(store.GetType());
+        _complexProperties = new ComplexProperties();
         _complexProperties.PropertyChanged += (o, e) => FirePropertyChanged(e.PropertyName);
-        _complexProperties.RegisterAllComplexPropertiesFrom(store);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -36,8 +35,6 @@ public abstract class BaseSyncWpfForm : ITrackChanges
 
     protected void SetProperty(object value, [CallerMemberName] string propertyName = null)
     {
-        if (_complexProperties.IsComplexProperty(propertyName))
-            _complexProperties.UpdateComplexProperty(propertyName, value);
         _unsavedValues.Add(propertyName, value);
         FirePropertyChanged(propertyName);
     }
@@ -76,5 +73,15 @@ public abstract class BaseSyncWpfForm : ITrackChanges
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = null)
+    {
+        _complexProperties.SetProperty(propertyName, complexProperty);        
+    }
+    
+    protected T GetComplexProperty<T>([CallerMemberName] string propertyName = null)
+    {
+        return _complexProperties.GetProperty<T>(propertyName);        
     }
 }
