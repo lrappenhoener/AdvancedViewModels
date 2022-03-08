@@ -44,6 +44,18 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeFalse();
     }
+    
+    [Fact]
+    public void NotDirty_When_Adding_Element_And_RejectChanges()
+    {
+        var sut = CreateSut();
+        var element = CreateElement();
+        sut.Add(element);
+        
+        sut.RejectChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
 
     [Fact]
     public void Returns_Correct_Initial_Elements()
