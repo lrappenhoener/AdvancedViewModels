@@ -57,6 +57,32 @@ public abstract class Tests
     }
     
     [Fact]
+    public void Successful_Insert_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        
+        sut.Insert(5, element);
+
+        for (int i = 0; i < 5; i++)
+        {
+            var expected = elements.ElementAt(i);
+            var returned = sut.ElementAt(i);
+            returned.Should().Be(expected);
+        }
+
+        sut.ElementAt(5).Should().Be(element);
+        
+        for (int i = 6; i < 10; i++)
+        {
+            var expected = elements.ElementAt(i - 1);
+            var returned = sut.ElementAt(i);
+            returned.Should().Be(expected);
+        }
+    }
+    
+    [Fact]
     public void NotDirty_When_Adding_Element_And_AcceptChanges()
     {
         var sut = CreateSut();
