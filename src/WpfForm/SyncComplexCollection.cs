@@ -88,7 +88,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void RemoveAt(int index)
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.RemoveAt(index);
     }
 
     public T this[int index]
