@@ -28,4 +28,16 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeTrue();
     }
+    
+    [Fact]
+    public void NotDirty_When_Adding_Element_And_AcceptChanges()
+    {
+        var sut = CreateSut();
+        var element = CreateElement();
+        sut.Add(element);
+        
+        sut.AcceptChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
 }
