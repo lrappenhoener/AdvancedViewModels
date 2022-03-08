@@ -34,6 +34,18 @@ public abstract class Tests
     }
     
     [Fact]
+    public void IsDirty_When_Removing_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = elements.ElementAt(7);
+        
+        sut.Remove(element);
+
+        sut.IsDirty.Should().BeTrue();
+    }
+    
+    [Fact]
     public void NotDirty_When_Adding_Element_And_AcceptChanges()
     {
         var sut = CreateSut();
