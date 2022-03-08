@@ -7,7 +7,7 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 
 public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
-    private IEnumerable<T> _elements;
+    private List<T> _elements;
     private ObservableCollection<T> _unsavedElements = new ObservableCollection<T>();
 
     public SyncComplexCollection() : this(new List<T>())
