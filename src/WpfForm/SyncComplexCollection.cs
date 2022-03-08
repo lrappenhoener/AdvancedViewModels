@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -6,9 +7,11 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 
 public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
+    private IEnumerable<T> _elements;
+    private ObservableCollection<T> _unsavedElements = new ObservableCollection<T>();
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
-    public bool IsDirty { get; }
+    public bool IsDirty => _unsavedElements.Any();
     public void AcceptChanges()
     {
         throw new System.NotImplementedException();
@@ -31,7 +34,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void Add(T item)
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.Add(item);
     }
 
     public void Clear()
