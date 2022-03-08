@@ -214,6 +214,30 @@ public abstract class Tests
         index.Should().Be(expectedIndex);
     }
 
+    [Fact]
+    public void Contains_Recognizes_Existing_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = elements.ElementAt(6);
+
+        var result = sut.Contains(element);
+
+        result.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void Contains_Recognizes_Not_Existing_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+
+        var result = sut.Contains(element);
+
+        result.Should().BeFalse();
+    }
+
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
