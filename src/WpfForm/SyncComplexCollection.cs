@@ -74,7 +74,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
         return _unsavedElements.Remove(item);
     }
 
-    public int Count { get; }
+    public int Count => _unsavedElements.Count;
     public bool IsReadOnly { get; }
     public int IndexOf(T item)
     {
