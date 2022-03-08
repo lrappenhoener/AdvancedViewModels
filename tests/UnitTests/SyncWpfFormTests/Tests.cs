@@ -1,5 +1,6 @@
 using System.Configuration;
 using FluentAssertions;
+using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 using Xunit;
 
 namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
