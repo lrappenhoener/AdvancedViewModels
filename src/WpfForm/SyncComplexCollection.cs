@@ -17,6 +17,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public SyncComplexCollection(IEnumerable<T> source)
     {
         _elements = new List<T>(source);
+        _unsavedElements = new ObservableCollection<T>(source);
     }
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
@@ -86,7 +87,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public T this[int index]
     {
-        get => throw new System.NotImplementedException();
+        get => _unsavedElements[index];
         set => throw new System.NotImplementedException();
     }
 }
