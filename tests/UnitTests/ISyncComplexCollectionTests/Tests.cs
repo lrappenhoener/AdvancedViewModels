@@ -44,4 +44,16 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeFalse();
     }
+
+    [Fact]
+    public void Returns_Correct_Initial_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var expected = elements.ElementAt(5);
+
+        var returned = sut.ElementAt(5);
+
+        returned.Should().Be(expected);
+    }
 }
