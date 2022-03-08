@@ -56,4 +56,17 @@ public abstract class Tests
 
         returned.Should().Be(expected);
     }
+    
+    [Fact]
+    public void Returns_Correct_Element_After_Replacing()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var expected = CreateElement();
+        sut[3] = expected;
+
+        var returned = sut.ElementAt(3);
+
+        returned.Should().Be(expected);
+    }
 }
