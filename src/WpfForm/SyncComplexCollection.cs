@@ -88,6 +88,6 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public T this[int index]
     {
         get => _unsavedElements[index];
-        set => throw new System.NotImplementedException();
+        set => _unsavedElements[index] = value;
     }
 }
