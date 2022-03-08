@@ -30,7 +30,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void RejectChanges()
     {
-        throw new System.NotImplementedException();
+        _unsavedElements = new ObservableCollection<T>(_elements);
     }
 
     public IEnumerator<T> GetEnumerator()
