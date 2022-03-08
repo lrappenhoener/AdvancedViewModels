@@ -78,7 +78,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public bool IsReadOnly { get; }
     public int IndexOf(T item)
     {
-        throw new System.NotImplementedException();
+        return _unsavedElements.IndexOf(item);
     }
 
     public void Insert(int index, T item)
