@@ -56,7 +56,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void Clear()
     {
-        throw new System.NotImplementedException();
+        _unsavedElements.Clear();
     }
 
     public bool Contains(T item)
