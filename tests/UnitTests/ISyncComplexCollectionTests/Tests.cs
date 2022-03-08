@@ -201,6 +201,19 @@ public abstract class Tests
         sut.Any().Should().BeFalse();
     }
 
+    [Fact]
+    public void IndexOf_Returns_Correct_Index()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var expectedIndex = 6;
+        var element = elements.ElementAt(expectedIndex);
+
+        var index = sut.IndexOf(element);
+
+        index.Should().Be(expectedIndex);
+    }
+
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
