@@ -22,7 +22,13 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
-    public bool IsDirty => _unsavedElements.Any();
+    public bool IsDirty { get
+    {
+        if (_unsavedElements.Count != _elements.Count()) return true;
+        for (int i = 0; i < _unsavedElements.Count; i++)
+            if (!ReferenceEquals(_unsavedElements[i], _elements[i])) return true;
+        return false;
+    }}
     public void AcceptChanges()
     {
         _elements = new List<T>(_unsavedElements);
