@@ -28,8 +28,4 @@
     <ProjectReference Include="..\..\src\WpfForm\WpfForm.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SyncComplexCollectionTests" />
-  </ItemGroup>
-
 </Project>
