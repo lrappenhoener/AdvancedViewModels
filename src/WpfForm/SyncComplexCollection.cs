@@ -71,7 +71,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public bool Remove(T item)
     {
-        throw new System.NotImplementedException();
+        return _unsavedElements.Remove(item);
     }
 
     public int Count { get; }
