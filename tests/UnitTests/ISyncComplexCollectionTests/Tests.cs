@@ -69,6 +69,18 @@ public abstract class Tests
     }
     
     [Fact]
+    public void IsDirty_When_Replacing_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        
+        sut[6] = element;
+
+        sut.IsDirty.Should().BeTrue();
+    }
+    
+    [Fact]
     public void Successful_Insert_Element()
     {
         var elements = CreateElements(10);
