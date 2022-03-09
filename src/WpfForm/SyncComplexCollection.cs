@@ -7,7 +7,7 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 
 public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
-    private List<T> _elements;
+    private List<T> _confirmedElements;
     private ObservableCollection<T> _unsavedElements;
 
     public SyncComplexCollection() : this(new List<T>())
@@ -16,7 +16,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     }
     public SyncComplexCollection(IEnumerable<T> source)
     {
-        _elements = new List<T>(source);
+        _confirmedElements = new List<T>(source);
         UpdateUnsavedElements(source);
     }
 
@@ -44,19 +44,19 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty { get
     {
-        if (_unsavedElements.Count != _elements.Count()) return true;
+        if (_unsavedElements.Count != _confirmedElements.Count()) return true;
         for (int i = 0; i < _unsavedElements.Count; i++)
-            if (!ReferenceEquals(_unsavedElements[i], _elements[i])) return true;
+            if (!ReferenceEquals(_unsavedElements[i], _confirmedElements[i])) return true;
         return false;
     }}
     public void AcceptChanges()
     {
-        _elements = new List<T>(_unsavedElements);
+        _confirmedElements = new List<T>(_unsavedElements);
     }
 
     public void RejectChanges()
     {
-        UpdateUnsavedElements(_elements);
+        UpdateUnsavedElements(_confirmedElements);
         OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
