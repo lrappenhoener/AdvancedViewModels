@@ -9,8 +9,8 @@ namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests
 
 public abstract class Tests
 {
-    protected abstract SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut();
-    protected abstract SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(IEnumerable<SampleBaseSyncWpfForm> elements);
+    protected abstract ISyncComplexCollection<SampleBaseSyncWpfForm> CreateSut();
+    protected abstract ISyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(IEnumerable<SampleBaseSyncWpfForm> elements);
     protected abstract SampleBaseSyncWpfForm CreateElement();
     protected abstract IEnumerable<SampleBaseSyncWpfForm> CreateElements(int count);
 
@@ -563,7 +563,7 @@ public abstract class Tests
         index.Should().Be(10);
     }
     
-    private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
+    private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
         sut.Add(CreateElement());
