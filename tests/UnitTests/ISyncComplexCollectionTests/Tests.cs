@@ -267,6 +267,26 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Event_Does_Not_Fire_IsDirty_When_RemovedAt_Index_Element_Mutates()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var index = 5;
+        var oldElement = elements.ElementAt(index);
+        sut.RemoveAt(index);
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName == nameof(sut.IsDirty))
+                invoked = true;
+        };
+
+        oldElement.SomeInteger++;
+
+        invoked.Should().BeFalse();
+    }
+    
+    [Fact]
     public void Successful_Insert_Element()
     {
         var elements = CreateElements(10);
