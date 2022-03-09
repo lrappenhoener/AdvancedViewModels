@@ -546,6 +546,22 @@ public abstract class Tests
 
         invoked.Should().BeTrue();
     }
+
+    [Fact]
+    public void ForEach_Iteration_Successful()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        int index = 0;
+
+        foreach (var element in sut)
+        {
+            element.Should().Be(elements.ElementAt(index));
+            index++;
+        }
+
+        index.Should().Be(10);
+    }
     
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
