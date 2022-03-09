@@ -42,7 +42,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void RejectChanges()
     {
+        _unsavedElements.CollectionChanged -= OnCollectionChanged;
         _unsavedElements = new ObservableCollection<T>(_elements);
+        _unsavedElements.CollectionChanged += OnCollectionChanged;
+        OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
     public IEnumerator<T> GetEnumerator()
