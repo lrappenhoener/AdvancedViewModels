@@ -89,7 +89,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new System.NotImplementedException();
+        return _currentElements.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
