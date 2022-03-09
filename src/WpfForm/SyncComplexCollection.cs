@@ -26,6 +26,13 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
             _currentElements.CollectionChanged -= OnCollectionChanged;
         _currentElements = new ObservableCollection<T>(source);
         _currentElements.CollectionChanged += OnCollectionChanged;
+        foreach (var currentElement in _currentElements)
+            currentElement.PropertyChanged += OnElementPropertyChanged;
+    }
+
+    private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(IsDirty));
     }
 
     private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
