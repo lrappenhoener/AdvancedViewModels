@@ -24,6 +24,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         CollectionChanged?.Invoke(this, e);
+        OnPropertyChanged(nameof(IsDirty));
     }
 
     private void OnPropertyChanged(string propertyName)
