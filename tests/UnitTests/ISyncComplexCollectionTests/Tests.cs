@@ -117,6 +117,23 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Event_Fires_IsDirty_When_RemoveAt_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName == nameof(sut.IsDirty))
+                invoked = true;
+        };
+        
+        sut.RemoveAt(5);
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void PropertyChanged_Event_Fires_IsDirty_When_Inserting_Element()
     {
         var elements = CreateElements(10);
