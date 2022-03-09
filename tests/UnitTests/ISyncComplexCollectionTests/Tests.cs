@@ -273,6 +273,25 @@ public abstract class Tests
         invoked.Should().BeTrue();
     }
     
+    [Fact]
+    public void NotifyCollectionChanged_Event_Fires_When_Replacing_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var oldElement = elements.ElementAt(5);
+        var newElement = CreateElement();
+        var invoked = false;
+        sut.CollectionChanged += (o, e) =>
+        {
+            if (e.OldItems.Contains(oldElement) && e.NewItems.Contains(newElement))
+                invoked = true;
+        };
+        
+        sut[5] = newElement;
+
+        invoked.Should().BeTrue();
+    }
+    
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
