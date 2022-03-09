@@ -238,6 +238,23 @@ public abstract class Tests
         result.Should().BeFalse();
     }
 
+    [Fact]
+    public void NotifyCollectionChanged_Event_Fires_When_Adding_Element()
+    {
+        var sut = CreateSut();
+        var element = CreateElement();
+        var invoked = false;
+        sut.CollectionChanged += (o, e) =>
+        {
+            if (e.NewItems.Contains(element))
+                invoked = true;
+        };
+        
+        sut.Add(element);
+
+        invoked.Should().BeTrue();
+    }
+
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
