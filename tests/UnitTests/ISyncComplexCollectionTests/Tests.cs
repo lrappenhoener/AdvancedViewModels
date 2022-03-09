@@ -291,6 +291,23 @@ public abstract class Tests
 
         invoked.Should().BeTrue();
     }
+
+    [Fact]
+    public void NotifyCollectionChanged_Event_Fires_When_Reject_Changes()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        Add_Insert_Replace_Remove_Elements(sut);
+        var invoked = false;
+        sut.CollectionChanged += (o, e) =>
+        {
+            invoked = true;
+        };
+        
+        sut.RejectChanges();
+
+        invoked.Should().BeTrue();
+    }
     
     private void Add_Insert_Replace_Remove_Elements(SyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
