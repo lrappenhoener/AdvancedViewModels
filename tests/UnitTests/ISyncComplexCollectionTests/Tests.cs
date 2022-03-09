@@ -207,6 +207,25 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Event_Fires_IsDirty_When_Inserted_Element_Mutates()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        sut.Insert(5, element);
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName == nameof(sut.IsDirty))
+                invoked = true;
+        };
+
+        element.SomeInteger++;
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void PropertyChanged_Event_Fires_IsDirty_Once_When_Replaced_NewElement_And_OldElement_Both_Mutate()
     {
         var elements = CreateElements(10);
