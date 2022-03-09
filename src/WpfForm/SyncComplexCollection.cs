@@ -45,6 +45,15 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
                 old.PropertyChanged -= OnElementPropertyChanged;
             }    
         }
+
+        if (e.NewItems != null)
+        {
+            foreach (var newItem in e.NewItems)
+            {
+                var newElement = newItem as IComplexProperty;
+                newElement.PropertyChanged += OnElementPropertyChanged;
+            }
+        }
         
         CollectionChanged?.Invoke(this, e);
         OnPropertyChanged(nameof(IsDirty));
