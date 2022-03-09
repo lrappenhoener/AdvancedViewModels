@@ -246,6 +246,26 @@ public abstract class Tests
 
         timesInvoked.Should().Be(1);
     }
+
+    [Fact]
+    public void PropertyChanged_Does_Not_Fire_When_Added_Element_Mutates_After_Being_Removed_By_RejectChanges()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        sut.Add(element);
+        sut.RejectChanges();
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName == nameof(sut.IsDirty))
+                invoked = true;
+        };
+
+        element.SomeInteger++;
+        
+        invoked.Should().BeFalse();
+    }
     
     [Fact]
     public void PropertyChanged_Event_Does_Not_Fire_IsDirty_When_Removed_Element_Mutates()
