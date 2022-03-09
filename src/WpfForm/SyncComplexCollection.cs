@@ -8,7 +8,7 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 {
     private List<T> _elements;
-    private ObservableCollection<T> _unsavedElements = new ObservableCollection<T>();
+    private ObservableCollection<T> _unsavedElements;
 
     public SyncComplexCollection() : this(new List<T>())
     {
@@ -17,6 +17,13 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     public SyncComplexCollection(IEnumerable<T> source)
     {
         _elements = new List<T>(source);
+        UpdateUnsavedElements(source);
+    }
+
+    private void UpdateUnsavedElements(IEnumerable<T> source)
+    {
+        if (_unsavedElements != null)
+            _unsavedElements.CollectionChanged -= OnCollectionChanged;
         _unsavedElements = new ObservableCollection<T>(source);
         _unsavedElements.CollectionChanged += OnCollectionChanged;
     }
@@ -49,9 +56,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
 
     public void RejectChanges()
     {
-        _unsavedElements.CollectionChanged -= OnCollectionChanged;
-        _unsavedElements = new ObservableCollection<T>(_elements);
-        _unsavedElements.CollectionChanged += OnCollectionChanged;
+        UpdateUnsavedElements(_elements);
         OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
