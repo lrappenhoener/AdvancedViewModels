@@ -18,6 +18,12 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
     {
         _elements = new List<T>(source);
         _unsavedElements = new ObservableCollection<T>(source);
+        _unsavedElements.CollectionChanged += OnCollectionChanged;
+    }
+
+    private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        CollectionChanged?.Invoke(this, e);
     }
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
