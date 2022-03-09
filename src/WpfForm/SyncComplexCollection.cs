@@ -26,6 +26,12 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T>
         CollectionChanged?.Invoke(this, e);
     }
 
+    private void OnPropertyChanged(string propertyName)
+    {
+        var args = new PropertyChangedEventArgs(propertyName);
+        PropertyChanged?.Invoke(this, args);        
+    }
+
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty { get
