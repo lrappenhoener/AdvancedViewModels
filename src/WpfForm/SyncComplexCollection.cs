@@ -17,10 +17,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     public SyncComplexCollection(IEnumerable<T> source)
     {
         _confirmedElements = new List<T>(source);
-        UpdateUnsavedElements(source);
+        UpdateCurrentElements(source);
     }
 
-    private void UpdateUnsavedElements(IEnumerable<T> source)
+    private void UpdateCurrentElements(IEnumerable<T> source)
     {
         if (_currentElements != null)
             _currentElements.CollectionChanged -= OnCollectionChanged;
@@ -56,7 +56,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     public void RejectChanges()
     {
-        UpdateUnsavedElements(_confirmedElements);
+        UpdateCurrentElements(_confirmedElements);
         OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
 
