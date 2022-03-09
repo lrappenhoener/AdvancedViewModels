@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-public class SyncComplexCollection<T> : ISyncComplexCollection<T>
+public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : IComplexProperty
 {
     private List<T> _confirmedElements;
     private ObservableCollection<T> _currentElements;
