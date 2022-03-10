@@ -304,6 +304,17 @@ public abstract class Tests
 
         sut.SomeInteger.Should().Be(expected);
     }
+
+    [Fact]
+    public void Get_On_Uninitialized_Complex_Property_Does_Not_Throw()
+    {
+        var sut = CreateSut();
+
+        var result = Record.Exception(() => sut.NullComplex);
+        
+        Assert.Null(result);
+    }
+    
     
     [Fact]
     public void Setting_Property_Multiple_Times_Does_Not_Throw()
