@@ -19,6 +19,7 @@ public abstract class BaseWpfForm : IComplexProperty
     private BaseWpfForm(SimpleProperties simpleProperties)
     {
         _simpleProperties = simpleProperties;
+        _simpleProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
         _complexProperties = new ComplexProperties();
         _complexProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
     }
@@ -41,7 +42,6 @@ public abstract class BaseWpfForm : IComplexProperty
     protected void SetProperty(object value, [CallerMemberName] string? propertyName = null)
     {
         _simpleProperties.SetProperty(propertyName, value);
-        FirePropertyChanged(propertyName);
     }
     
     protected T GetProperty<T>([CallerMemberName] string? propertyName = null)
@@ -62,5 +62,6 @@ public abstract class BaseWpfForm : IComplexProperty
     private void FirePropertyChanged(string? propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));
     }
 }

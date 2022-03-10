@@ -38,10 +38,11 @@ internal class ComplexProperties : ITrackChanges
     public void RejectChanges()
     {
         var dirtyComplexProperties = _complexPropertyRegistrations.Where(cpr => cpr.Value.Target.IsDirty)
-            .Select(cpr => cpr.Value.Target);
+            .Select(cpr => Tuple.Create(cpr.Key, cpr.Value.Target));
         foreach (var dirtyComplexProperty in dirtyComplexProperties)
         {
-            dirtyComplexProperty.RejectChanges();
+            dirtyComplexProperty.Item2.RejectChanges();
+            FirePropertyChanged(dirtyComplexProperty.Item1);
         }
     }
     

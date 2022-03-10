@@ -13,6 +13,7 @@ public abstract class SimpleProperties
     public void SetProperty(string? propertyName, object value)
     {
         _unsavedValues[propertyName] = value;
+        FirePropertyChanged(propertyName);
     }
 
     public T GetProperty<T>(string? propertyName)
@@ -34,10 +35,17 @@ public abstract class SimpleProperties
 
     public void RejectChanges()
     {
+        foreach (var unsavedValue in _unsavedValues)
+            FirePropertyChanged(unsavedValue.Key);
         _unsavedValues.Clear();
     }    
     
     protected abstract void SetPropertyImplementation(string? propertyName, object value);
 
     protected abstract T GetPropertyImplementation<T>(string? propertyName);
+    
+    private void FirePropertyChanged(string? propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

@@ -32,7 +32,8 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        OnPropertyChanged(nameof(IsDirty));
+        if (e.PropertyName != nameof(IsDirty))
+            OnPropertyChanged(nameof(IsDirty));
     }
 
     private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
