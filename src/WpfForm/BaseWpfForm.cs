@@ -59,7 +59,7 @@ public abstract class BaseWpfForm : IComplexProperty
         return _complexProperties.GetProperty<T>(propertyName);        
     }
     
-    private void FirePropertyChanged(string propertyName)
+    private void FirePropertyChanged(string? propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

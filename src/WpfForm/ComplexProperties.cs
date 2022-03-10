@@ -12,14 +12,14 @@ internal class ComplexProperties : ITrackChanges
     
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
     
-    public void SetProperty(string complexPropertyName, IComplexProperty complexProperty)
+    public void SetProperty(string? complexPropertyName, IComplexProperty complexProperty)
     {
         if (RegistrationExists(complexPropertyName))
             UnregisterComplexProperty(complexPropertyName);
         RegisterComplexProperty(complexPropertyName, complexProperty);
     }
 
-    public T GetProperty<T>(string propertyName)
+    public T GetProperty<T>(string? propertyName)
     {
         var registration = _complexPropertyRegistrations[propertyName];
         return (T)registration.Target;
@@ -45,7 +45,7 @@ internal class ComplexProperties : ITrackChanges
         }
     }
     
-    private void RegisterComplexProperty(string complexPropertyName, IComplexProperty? complexProperty)
+    private void RegisterComplexProperty(string? complexPropertyName, IComplexProperty? complexProperty)
     {
         if (complexProperty == null) return;
         var handler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
@@ -54,19 +54,19 @@ internal class ComplexProperties : ITrackChanges
             new ComplexPropertyRegistration(complexPropertyName, handler, complexProperty));
     }
     
-    private void UnregisterComplexProperty(string complexPropertyName)
+    private void UnregisterComplexProperty(string? complexPropertyName)
     {
         var registration = _complexPropertyRegistrations[complexPropertyName];
         registration.Target.PropertyChanged -= registration.Handler;
         _complexPropertyRegistrations.Remove(complexPropertyName);
     }
     
-    private bool RegistrationExists(string propertyName)
+    private bool RegistrationExists(string? propertyName)
     {
         return _complexPropertyRegistrations.ContainsKey(propertyName);
     }
 
-    private void FirePropertyChanged(string propertyName)
+    private void FirePropertyChanged(string? propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
