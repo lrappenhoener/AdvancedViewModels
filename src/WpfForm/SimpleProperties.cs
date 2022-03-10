@@ -16,11 +16,11 @@ public abstract class SimpleProperties
         _unsavedValues[propertyName] = value;
     }
 
-    public Maybe<object> GetProperty(string propertyName)
+    public T GetProperty<T>(string propertyName)
     {
         return _unsavedValues.ContainsKey(propertyName)
-            ? Maybe.Some<object>(_unsavedValues[propertyName])
-            : GetPropertyImplementation(propertyName);
+            ? (T)_unsavedValues[propertyName]
+            : GetPropertyImplementation<T>(propertyName);
     }
     
     public void AcceptChanges()
@@ -40,5 +40,5 @@ public abstract class SimpleProperties
     
     protected abstract void SetPropertyImplementation(string propertyName, object value);
 
-    protected abstract Maybe<object> GetPropertyImplementation(string propertyName);
+    protected abstract T GetPropertyImplementation<T>(string propertyName);
 }

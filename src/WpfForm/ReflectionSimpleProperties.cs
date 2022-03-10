@@ -21,13 +21,13 @@ public class ReflectionSimpleProperties : SimpleProperties
         _propertyInfos[propertyName].SetValue(_store, value);
     }
 
-    protected override Maybe<object> GetPropertyImplementation(string propertyName)
+    protected override T GetPropertyImplementation<T>(string propertyName)
     {
         RefreshPropertyInfo(propertyName);
         var value = _propertyInfos[propertyName].GetValue(_store);
         return value != null ? 
-            Maybe.Some<object>(value) : 
-            Maybe.None<object>();
+            (T)value : 
+            default(T);
     }
 
     private void RefreshPropertyInfo(string propertyName)
