@@ -120,6 +120,24 @@ public abstract class Tests
     }
     
     [Fact]
+    public void PropertyChanged_Fires_When_Changed_Value_Property_And_RejectChanges()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.SomeInteger = 2022;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeInteger))
+                return;
+            invoked = true;
+        };
+
+        sut.RejectChanges();
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void PropertyChanged_Fires_Only_One_Time_When_Updated_And_Old_Complex_Property_Both_Mutate()
     {
         var sut = CreateSut();
