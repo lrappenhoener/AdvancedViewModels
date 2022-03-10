@@ -21,65 +21,77 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeFalse();
     }
-    
+
     [Fact]
     public void IsDirty_When_Adding_Element()
     {
         var sut = CreateSut();
         var element = CreateElement();
-        
+
         sut.Add(element);
 
         sut.IsDirty.Should().BeTrue();
     }
-    
+
     [Fact]
     public void IsDirty_When_Removing_Element()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var element = elements.ElementAt(7);
-        
+
         sut.Remove(element);
 
         sut.IsDirty.Should().BeTrue();
     }
-    
+
     [Fact]
     public void IsDirty_When_Removing_At_Index()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        
+
         sut.RemoveAt(7);
 
         sut.IsDirty.Should().BeTrue();
     }
-    
+
     [Fact]
     public void IsDirty_When_Insert_Element()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var element = CreateElement();
-        
+
         sut.Insert(6, element);
 
         sut.IsDirty.Should().BeTrue();
     }
-    
+
     [Fact]
     public void IsDirty_When_Replacing_Element()
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var element = CreateElement();
-        
+
         sut[6] = element;
 
         sut.IsDirty.Should().BeTrue();
     }
-    
+
+    [Fact]
+    public void IsDirty_When_Element_Mutated()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = elements.ElementAt(5);
+
+        element.SomeInteger++;
+
+        sut.IsDirty.Should().BeTrue();
+    }
+
     [Fact]
     public void PropertyChanged_Event_Fires_IsDirty_When_Adding_Element()
     {
