@@ -77,6 +77,8 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     }}
     public void AcceptChanges()
     {
+        foreach (var dirtyElement in _currentElements.Where(e => e.IsDirty))
+            dirtyElement.AcceptChanges();
         _confirmedElements = new List<T>(_currentElements);
     }
 
