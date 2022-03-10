@@ -45,7 +45,7 @@ internal class ComplexProperties : ITrackChanges
         }
     }
     
-    private void RegisterComplexProperty(string complexPropertyName, IComplexProperty complexProperty)
+    private void RegisterComplexProperty(string complexPropertyName, IComplexProperty? complexProperty)
     {
         if (complexProperty == null) return;
         var handler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));

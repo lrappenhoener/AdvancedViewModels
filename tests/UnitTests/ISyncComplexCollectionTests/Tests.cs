@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 using Xunit;
 
 namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests;

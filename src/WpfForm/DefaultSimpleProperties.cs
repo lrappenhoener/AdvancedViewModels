@@ -1,6 +1,3 @@
-using System.Dynamic;
-using PCC.Libs.Nulls;
-
 namespace PCC.Datastructures.CSharp.WpfForm;
 
 public class DefaultSimpleProperties : SimpleProperties

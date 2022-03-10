@@ -1,5 +1,3 @@
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
-
 namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 
 public class SampleBaseSyncWpfForm : BaseWpfForm
