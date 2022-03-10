@@ -20,7 +20,7 @@ public abstract class BaseWpfForm : IComplexProperty
     {
         _simpleProperties = simpleProperties;
         _complexProperties = new ComplexProperties();
-        _complexProperties.PropertyChanged += (o, e) => FirePropertyChanged(e.PropertyName);
+        _complexProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
