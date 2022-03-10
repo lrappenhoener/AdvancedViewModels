@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>PCC.Datastructures.CSharp.WpfForm</RootNamespace>
         <LangVersion>10</LangVersion>
+        <PackageVersion>0.0.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
