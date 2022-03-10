@@ -2,23 +2,29 @@ using PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
 
 namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 
-public class SampleBaseSyncWpfForm : BaseSyncWpfForm
+public class SampleBaseSyncWpfForm : BaseWpfForm
 {
     public SampleBaseSyncWpfForm(SampleBackingObject wrapped, int depth) : base(wrapped)
     {
         if (depth > 2) return;
         SomeComplex = new SampleBaseSyncWpfForm(wrapped.SomeComplex, depth + 1);
     }
+    
+    public SampleBaseSyncWpfForm(int depth) : base()
+    {
+        if (depth > 2) return;
+        SomeComplex = new SampleBaseSyncWpfForm(depth + 1);
+    }
 
     public int SomeInteger
     {
-        get => (int)GetProperty().Value;
+        get => GetProperty<int>();
         set => SetProperty(value);
     }
 
     public object SomeReference
     {
-        get => GetProperty().Value;
+        get => GetProperty<object>();
         set => SetProperty(value);
     }
 

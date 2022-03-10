@@ -4,14 +4,22 @@ using PCC.Libs.Nulls;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
-public abstract class BaseSyncWpfForm : IComplexProperty
+public abstract class BaseWpfForm : IComplexProperty
 {
     private readonly SimpleProperties _simpleProperties;
     private readonly ComplexProperties _complexProperties;
 
-    protected BaseSyncWpfForm(object store)
+    protected BaseWpfForm(object store) : this(new ReflectionSimpleProperties(store))
     {
-        _simpleProperties = new ReflectionSimpleProperties(store);
+    }
+
+    protected BaseWpfForm() : this(new DefaultSimpleProperties())
+    {
+    }
+
+    private BaseWpfForm(SimpleProperties simpleProperties)
+    {
+        _simpleProperties = simpleProperties;
         _complexProperties = new ComplexProperties();
         _complexProperties.PropertyChanged += (o, e) => FirePropertyChanged(e.PropertyName);
     }
@@ -37,9 +45,9 @@ public abstract class BaseSyncWpfForm : IComplexProperty
         FirePropertyChanged(propertyName);
     }
     
-    protected Maybe<object> GetProperty([CallerMemberName] string propertyName = null)
+    protected T GetProperty<T>([CallerMemberName] string propertyName = null)
     {
-        return _simpleProperties.GetProperty(propertyName);
+        return _simpleProperties.GetProperty<T>(propertyName);
     }
 
     protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = null)
