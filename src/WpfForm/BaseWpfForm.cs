@@ -39,27 +39,27 @@ public abstract class BaseWpfForm : IComplexProperty
         _simpleProperties.RejectChanges();
     }
     
-    protected void SetProperty(object value, [CallerMemberName] string? propertyName = null)
+    protected void SetProperty(object value, [CallerMemberName] string propertyName = "")
     {
         _simpleProperties.SetProperty(propertyName, value);
     }
     
-    protected T GetProperty<T>([CallerMemberName] string? propertyName = null)
+    protected T GetProperty<T>([CallerMemberName] string propertyName = "")
     {
         return _simpleProperties.GetProperty<T>(propertyName);
     }
 
-    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string? propertyName = null)
+    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = "")
     {
         _complexProperties.SetProperty(propertyName, complexProperty);        
     }
 
-    protected T GetComplexProperty<T>([CallerMemberName] string? propertyName = null)
+    protected T GetComplexProperty<T>([CallerMemberName] string propertyName = "")
     {
         return _complexProperties.GetProperty<T>(propertyName);        
     }
     
-    private void FirePropertyChanged(string? propertyName)
+    private void FirePropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));

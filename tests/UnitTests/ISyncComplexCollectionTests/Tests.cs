@@ -4,14 +4,14 @@ using FluentAssertions;
 using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests;
+namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.ISyncComplexCollectionTests;
 
 public abstract class Tests
 {
     protected abstract ISyncComplexCollection<SampleBaseSyncWpfForm> CreateSut();
-    protected abstract ISyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(IEnumerable<SampleBaseSyncWpfForm> elements);
+    protected abstract ISyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(List<SampleBaseSyncWpfForm> elements);
     protected abstract SampleBaseSyncWpfForm CreateElement();
-    protected abstract IEnumerable<SampleBaseSyncWpfForm> CreateElements(int count);
+    protected abstract List<SampleBaseSyncWpfForm> CreateElements(int count);
 
     [Fact]
     public void NotDirty_Initially()
@@ -98,7 +98,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = CreateElement();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -116,7 +116,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = elements.ElementAt(5);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -133,7 +133,7 @@ public abstract class Tests
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -151,7 +151,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = CreateElement();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -169,7 +169,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = CreateElement();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -187,7 +187,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = elements.ElementAt(5);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -206,7 +206,7 @@ public abstract class Tests
         var element = CreateElement();
         sut.Add(element);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -225,7 +225,7 @@ public abstract class Tests
         var element = CreateElement();
         sut.Insert(5, element);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -246,7 +246,7 @@ public abstract class Tests
         var replacedElement = elements.ElementAt(index);
         sut[index] = newElement;
         var timesInvoked = 0;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 timesInvoked++;
@@ -267,7 +267,7 @@ public abstract class Tests
         sut.Add(element);
         sut.RejectChanges();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -286,7 +286,7 @@ public abstract class Tests
         var oldElement = elements.ElementAt(5);
         sut.Remove(oldElement);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -306,7 +306,7 @@ public abstract class Tests
         var oldElement = elements.ElementAt(index);
         sut.RemoveAt(index);
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName == nameof(sut.IsDirty))
                 invoked = true;
@@ -493,9 +493,9 @@ public abstract class Tests
         var sut = CreateSut();
         var element = CreateElement();
         var invoked = false;
-        sut.CollectionChanged += (o, e) =>
+        sut.CollectionChanged += (_, e) =>
         {
-            if (e.NewItems.Contains(element))
+            if (e.NewItems != null && e.NewItems.Contains(element))
                 invoked = true;
         };
         
@@ -511,9 +511,9 @@ public abstract class Tests
         var sut = CreateSut(elements);
         var element = elements.ElementAt(5);
         var invoked = false;
-        sut.CollectionChanged += (o, e) =>
+        sut.CollectionChanged += (_, e) =>
         {
-            if (e.OldItems.Contains(element))
+            if (e.OldItems != null && e.OldItems.Contains(element))
                 invoked = true;
         };
         
@@ -530,9 +530,9 @@ public abstract class Tests
         var oldElement = elements.ElementAt(5);
         var newElement = CreateElement();
         var invoked = false;
-        sut.CollectionChanged += (o, e) =>
+        sut.CollectionChanged += (_, e) =>
         {
-            if (e.OldItems.Contains(oldElement) && e.NewItems.Contains(newElement))
+            if (e.OldItems != null && e.OldItems.Contains(oldElement) && e.NewItems != null && e.NewItems.Contains(newElement))
                 invoked = true;
         };
         
@@ -548,7 +548,7 @@ public abstract class Tests
         var sut = CreateSut(elements);
         Add_Insert_Replace_Remove_Elements(sut);
         var invoked = false;
-        sut.CollectionChanged += (o, e) =>
+        sut.CollectionChanged += (_, _) =>
         {
             invoked = true;
         };

@@ -8,7 +8,7 @@ public class SampleBaseSyncWpfForm : BaseWpfForm
         SomeComplex = new SampleBaseSyncWpfForm(wrapped.SomeComplex, depth + 1);
     }
     
-    public SampleBaseSyncWpfForm(int depth) : base()
+    public SampleBaseSyncWpfForm(int depth)
     {
         if (depth > 2) return;
         SomeComplex = new SampleBaseSyncWpfForm(depth + 1);

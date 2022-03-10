@@ -8,13 +8,13 @@ namespace PCC.Datastructures.CSharp.WpfForm;
 public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : IComplexProperty
 {
     private List<T> _confirmedElements;
-    private ObservableCollection<T> _currentElements;
+    private ObservableCollection<T> _currentElements = new ObservableCollection<T>();
 
     public SyncComplexCollection() : this(new List<T>())
     {
         
     }
-    public SyncComplexCollection(IEnumerable<T> source)
+    public SyncComplexCollection(List<T> source)
     {
         _confirmedElements = new List<T>(source);
         UpdateCurrentElements(source);
@@ -22,8 +22,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     private void UpdateCurrentElements(IEnumerable<T> source)
     {
-        if (_currentElements != null)
-            _currentElements.CollectionChanged -= OnCollectionChanged;
+        _currentElements.CollectionChanged -= OnCollectionChanged;
         _currentElements = new ObservableCollection<T>(source);
         _currentElements.CollectionChanged += OnCollectionChanged;
         foreach (var currentElement in _currentElements)
@@ -38,26 +37,28 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.OldItems != null)
-        {
-            foreach (var oldItem in e.OldItems)
-            {
-                var old = oldItem as IComplexProperty;
-                old.PropertyChanged -= OnElementPropertyChanged;
-            }    
-        }
+        var oldComplexProperties =
+            e.OldItems != null ? e.OldItems.OfType<IComplexProperty>() : new List<IComplexProperty>();
+        Unhook(oldComplexProperties);
 
-        if (e.NewItems != null)
-        {
-            foreach (var newItem in e.NewItems)
-            {
-                var newElement = newItem as IComplexProperty;
-                newElement.PropertyChanged += OnElementPropertyChanged;
-            }
-        }
+        var newComplexProperties =
+            e.NewItems != null ? e.NewItems.OfType<IComplexProperty>() : new List<IComplexProperty>();
+        Hook(newComplexProperties);
         
         CollectionChanged?.Invoke(this, e);
         OnPropertyChanged(nameof(IsDirty));
+    }
+
+    private void Unhook(IEnumerable<IComplexProperty> complexProperties)
+    {
+        foreach (var complexProperty in complexProperties)
+            complexProperty.PropertyChanged -= OnElementPropertyChanged;
+    }
+    
+    private void Hook(IEnumerable<IComplexProperty> complexProperties)
+    {
+        foreach (var complexProperty in complexProperties)
+            complexProperty.PropertyChanged += OnElementPropertyChanged;
     }
 
     private void OnPropertyChanged(string propertyName)

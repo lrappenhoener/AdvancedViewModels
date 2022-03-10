@@ -10,13 +10,13 @@ public abstract class SimpleProperties
     
     public bool IsDirty => _unsavedValues.Any();
 
-    public void SetProperty(string? propertyName, object value)
+    public void SetProperty(string propertyName, object value)
     {
         _unsavedValues[propertyName] = value;
         FirePropertyChanged(propertyName);
     }
 
-    public T GetProperty<T>(string? propertyName)
+    public T GetProperty<T>(string propertyName)
     {
         return _unsavedValues.ContainsKey(propertyName)
             ? (T)_unsavedValues[propertyName]
@@ -40,11 +40,11 @@ public abstract class SimpleProperties
         _unsavedValues.Clear();
     }    
     
-    protected abstract void SetPropertyImplementation(string? propertyName, object value);
+    protected abstract void SetPropertyImplementation(string propertyName, object value);
 
-    protected abstract T GetPropertyImplementation<T>(string? propertyName);
+    protected abstract T GetPropertyImplementation<T>(string propertyName);
     
-    private void FirePropertyChanged(string? propertyName)
+    private void FirePropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

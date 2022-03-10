@@ -4,6 +4,8 @@ using Xunit;
 
 namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.WpfFormTests;
 
+#nullable disable
+
 public abstract class Tests
 {
     protected abstract SampleBaseSyncWpfForm CreateSut();
@@ -34,7 +36,7 @@ public abstract class Tests
     {
         var sut = CreateSut();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeInteger))
                 return;
@@ -51,7 +53,7 @@ public abstract class Tests
     {
         var sut = CreateSut();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
@@ -70,7 +72,7 @@ public abstract class Tests
         var invoked = false;
         var old = sut.SomeComplex;
         sut.SomeComplex = null;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
@@ -88,7 +90,7 @@ public abstract class Tests
         var sut = CreateSut();
         sut.SomeComplex = CreateComplex();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
@@ -107,7 +109,7 @@ public abstract class Tests
         sut.SomeComplex = CreateComplex();
         var invoked = false;
         sut.SomeComplex.SomeInteger = 2022;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
@@ -125,7 +127,7 @@ public abstract class Tests
         var sut = CreateSut();
         var invoked = false;
         sut.SomeInteger = 2022;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeInteger))
                 return;
@@ -143,7 +145,7 @@ public abstract class Tests
         var sut = CreateSut();
         var invoked = false;
         sut.SomeInteger = 2022;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.IsDirty))
                 return;
@@ -162,7 +164,7 @@ public abstract class Tests
         var old = sut.SomeComplex;
         sut.SomeComplex = CreateComplex();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeComplex))
                 return;
@@ -179,7 +181,7 @@ public abstract class Tests
     {
         var sut = CreateSut();
         var invoked = false;
-        sut.PropertyChanged += (o, e) =>
+        sut.PropertyChanged += (_, e) =>
         {
             if (e.PropertyName != nameof(sut.SomeReference))
                 return;

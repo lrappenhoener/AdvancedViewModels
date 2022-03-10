@@ -14,13 +14,14 @@ public class ReflectionSimpleProperties : SimpleProperties
         _storeType = store.GetType();
     }
 
-    protected override void SetPropertyImplementation(string? propertyName, object value)
+    protected override void SetPropertyImplementation(string propertyName, object value)
     {
         RefreshPropertyInfo(propertyName);
         _propertyInfos[propertyName].SetValue(_store, value);
     }
 
-    protected override T GetPropertyImplementation<T>(string? propertyName)
+    #nullable disable
+    protected override T GetPropertyImplementation<T>(string propertyName)
     {
         RefreshPropertyInfo(propertyName);
         var value = _propertyInfos[propertyName].GetValue(_store);
@@ -29,7 +30,7 @@ public class ReflectionSimpleProperties : SimpleProperties
             default(T);
     }
 
-    private void RefreshPropertyInfo(string? propertyName)
+    private void RefreshPropertyInfo(string propertyName)
     {
         if (!_propertyInfos.ContainsKey(propertyName))
             _propertyInfos.Add(propertyName, _storeType.GetProperty(propertyName));

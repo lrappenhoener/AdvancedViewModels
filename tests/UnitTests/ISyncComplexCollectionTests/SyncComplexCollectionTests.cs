@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncComplexCollectionTests;
+namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.ISyncComplexCollectionTests;
 
 public class SyncComplexCollectionTests : Tests
 {
@@ -10,7 +10,7 @@ public class SyncComplexCollectionTests : Tests
         return new SyncComplexCollection<SampleBaseSyncWpfForm>();
     }
 
-    protected override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(IEnumerable<SampleBaseSyncWpfForm> elements)
+    protected override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(List<SampleBaseSyncWpfForm> elements)
     {
         return new SyncComplexCollection<SampleBaseSyncWpfForm>(elements);
     }
@@ -20,7 +20,7 @@ public class SyncComplexCollectionTests : Tests
         return new SampleBaseSyncWpfForm(new SampleBackingObject(0), 0);
     }
 
-    protected override IEnumerable<SampleBaseSyncWpfForm> CreateElements(int count)
+    protected override List<SampleBaseSyncWpfForm> CreateElements(int count)
     {
         var elements = new List<SampleBaseSyncWpfForm>();
         for (int i = 0; i < count; i++)
