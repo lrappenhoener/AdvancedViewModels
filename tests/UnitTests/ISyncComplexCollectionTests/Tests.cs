@@ -590,6 +590,21 @@ public abstract class Tests
         mutated.All(e => !e.IsDirty).Should().BeTrue();
     }
     
+    [Fact]
+    public void All_Elements_RejectChanges_Will_Be_Invoked_When_RejectChanges()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var mutated = new List<SampleBaseSyncWpfForm>
+            {elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9)};
+        foreach (var element in mutated)
+            element.SomeInteger++;
+
+        sut.RejectChanges();
+
+        mutated.All(e => !e.IsDirty).Should().BeTrue();
+    }
+    
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleBaseSyncWpfForm> sut)
     {
         sut[3] = CreateElement();
