@@ -71,7 +71,8 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     {
         if (_currentElements.Count != _confirmedElements.Count()) return true;
         for (int i = 0; i < _currentElements.Count; i++)
-            if (!ReferenceEquals(_currentElements[i], _confirmedElements[i])) return true;
+            if (!ReferenceEquals(_currentElements[i], _confirmedElements[i]) || _currentElements[i].IsDirty) 
+                return true;
         return false;
     }}
     public void AcceptChanges()
