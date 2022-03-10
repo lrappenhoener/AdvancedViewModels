@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Reflection;
 using FluentAssertions;
 using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
 using Xunit;
@@ -318,5 +319,17 @@ public abstract class Tests
         sut.RejectChanges();
 
         sut.SomeInteger.Should().Be(expected);
+    }
+    
+    [Fact]
+    public void Setting_Property_Multiple_Times_Does_Not_Throw()
+    {
+        var wrappedObject = CreateWrappedObject();
+        var sut = CreateSut(wrappedObject);
+        sut.SomeReference = new object();
+        
+        var exception = Record.Exception(() => sut.SomeReference = new object());
+        
+        Assert.Null(exception);
     }
 }
