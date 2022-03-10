@@ -39,23 +39,23 @@ public abstract class BaseWpfForm : IComplexProperty
         _simpleProperties.RejectChanges();
     }
     
-    protected void SetProperty(object value, [CallerMemberName] string propertyName = null)
+    protected void SetProperty(object value, [CallerMemberName] string? propertyName = null)
     {
         _simpleProperties.SetProperty(propertyName, value);
         FirePropertyChanged(propertyName);
     }
     
-    protected T GetProperty<T>([CallerMemberName] string propertyName = null)
+    protected T GetProperty<T>([CallerMemberName] string? propertyName = null)
     {
         return _simpleProperties.GetProperty<T>(propertyName);
     }
 
-    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = null)
+    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string? propertyName = null)
     {
         _complexProperties.SetProperty(propertyName, complexProperty);        
     }
 
-    protected T GetComplexProperty<T>([CallerMemberName] string propertyName = null)
+    protected T GetComplexProperty<T>([CallerMemberName] string? propertyName = null)
     {
         return _complexProperties.GetProperty<T>(propertyName);        
     }
