@@ -86,6 +86,8 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     {
         foreach (var currentElement in _currentElements)
             currentElement.PropertyChanged -= OnElementPropertyChanged;
+        foreach (var dirtyElement in _confirmedElements.Where(e => e.IsDirty))
+            dirtyElement.RejectChanges();
         UpdateCurrentElements(_confirmedElements);
         OnCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
