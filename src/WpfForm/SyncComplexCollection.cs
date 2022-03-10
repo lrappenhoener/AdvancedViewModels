@@ -129,7 +129,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     }
 
     public int Count => _currentElements.Count;
-    public bool IsReadOnly { get; }
+    public bool IsReadOnly => false;
     public int IndexOf(T item)
     {
         return _currentElements.IndexOf(item);
