@@ -27,4 +27,10 @@ public class SampleBaseSyncWpfForm : BaseSyncWpfForm
         get => GetComplexProperty<SampleBaseSyncWpfForm>();
         set => SetComplexProperty(value);
     }
+
+    public SyncComplexCollection<SampleBaseSyncWpfForm> ComplexCollection 
+    {
+        get => GetComplexProperty<SyncComplexCollection<SampleBaseSyncWpfForm>>();
+        set => SetComplexProperty(value);
+    }
 }
