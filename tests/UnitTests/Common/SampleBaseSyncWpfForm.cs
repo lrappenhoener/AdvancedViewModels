@@ -20,13 +20,26 @@ public class SampleBaseSyncWpfForm : BaseWpfForm
         set => SetProperty(value);
     }
 
+    public int UninitializedInteger 
+    {
+        get => GetProperty<int>();
+        set => SetProperty(value);
+    }
+
     public object SomeReference
     {
         get => GetProperty<object>();
         set => SetProperty(value);
     }
-
+    
+    #nullable disable
     public SampleBaseSyncWpfForm SomeComplex
+    {
+        get => GetComplexProperty<SampleBaseSyncWpfForm>();
+        set => SetComplexProperty(value);
+    }
+    
+    public SampleBaseSyncWpfForm NullComplex
     {
         get => GetComplexProperty<SampleBaseSyncWpfForm>();
         set => SetComplexProperty(value);

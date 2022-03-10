@@ -14,6 +14,7 @@ public class SampleBackingObject
     }
     
     public int SomeInteger { get; set; } = 42;
+    public int UninitializedInteger { get; set; }
     public object SomeReference { get; set; } = new object();
     public SampleBackingObject SomeComplex { get; set; } 
 }

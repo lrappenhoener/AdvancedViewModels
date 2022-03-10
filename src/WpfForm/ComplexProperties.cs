@@ -20,8 +20,10 @@ internal class ComplexProperties : ITrackChanges
         RegisterComplexProperty(complexPropertyName, complexProperty);
     }
 
-    public T GetProperty<T>(string propertyName)
+    public T? GetProperty<T>(string propertyName)
     {
+        if (!_complexPropertyRegistrations.ContainsKey(propertyName))
+            return default(T);
         var registration = _complexPropertyRegistrations[propertyName];
         return (T)registration.Target;
     }

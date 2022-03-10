@@ -54,7 +54,7 @@ public abstract class BaseWpfForm : IComplexProperty
         _complexProperties.SetProperty(propertyName, complexProperty);        
     }
 
-    protected T GetComplexProperty<T>([CallerMemberName] string propertyName = "")
+    protected T? GetComplexProperty<T>([CallerMemberName] string propertyName = "")
     {
         return _complexProperties.GetProperty<T>(propertyName);        
     }
