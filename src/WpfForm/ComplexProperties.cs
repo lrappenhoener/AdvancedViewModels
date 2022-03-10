@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Reflection;
 
 namespace PCC.Datastructures.CSharp.WpfForm;
 
@@ -49,7 +48,7 @@ internal class ComplexProperties : ITrackChanges
     private void RegisterComplexProperty(string complexPropertyName, IComplexProperty complexProperty)
     {
         if (complexProperty == null) return;
-        var handler = new PropertyChangedEventHandler((o, e) => FirePropertyChanged(complexPropertyName));
+        var handler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
         complexProperty.PropertyChanged += handler;
         _complexPropertyRegistrations.Add(complexPropertyName,
             new ComplexPropertyRegistration(complexPropertyName, handler, complexProperty));
