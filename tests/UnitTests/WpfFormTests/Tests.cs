@@ -315,6 +315,15 @@ public abstract class Tests
         Assert.Null(result);
     }
     
+    [Fact]
+    public void Get_On_Uninitialized_Value_Property_Does_Not_Throw()
+    {
+        var sut = CreateSut();
+
+        var result = Record.Exception(() => sut.UninitializedInteger);
+        
+        Assert.Null(result);
+    }
     
     [Fact]
     public void Setting_Property_Multiple_Times_Does_Not_Throw()
