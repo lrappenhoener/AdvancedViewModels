@@ -6,11 +6,24 @@
         <Nullable>enable</Nullable>
         <RootNamespace>PCC.Datastructures.CSharp.WpfForm</RootNamespace>
         <LangVersion>10</LangVersion>
-        <PackageVersion>0.0.1</PackageVersion>
+        <PackageVersion>0.0.4</PackageVersion>
+        <PackageId>WpfForm</PackageId>
+        <Authors>lr</Authors>
+        <Company>pcc</Company>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>..\..\..\build\debug</OutputPath>
+      <PackageOutputPath>g:\Packages\Private\/</PackageOutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <OutputPath>..\..\..\build\release</OutputPath>
+      <PackageOutputPath>g:\Packages\Private\</PackageOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Nulls" Version="1.0.1" />
     </ItemGroup>
-
 </Project>
