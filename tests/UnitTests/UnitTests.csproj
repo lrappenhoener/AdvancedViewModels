@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-<RootNamespace>PCC.Datastructures.CSharp.WpfForm.UnitTests</RootNamespace>
+<RootNamespace>PCC.Datastructures.CSharp.BaseViewModel.UnitTests</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
 
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WpfForm\WpfForm.csproj" />
+    <ProjectReference Include="..\..\src\BaseViewModel\BaseViewModel.csproj" />
   </ItemGroup>
 
 </Project>

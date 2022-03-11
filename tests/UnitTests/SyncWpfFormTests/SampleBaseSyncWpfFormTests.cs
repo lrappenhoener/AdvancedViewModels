@@ -1,12 +1,12 @@
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
+using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
+namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.SyncWpfFormTests;
 
 public class SampleBaseSyncWpfFormTests : Tests
 {
-    protected override SampleBaseSyncWpfForm CreateSut(SampleBackingObject wrappedObject)
+    protected override SampleBaseSyncViewModel CreateSut(SampleBackingObject wrappedObject)
     {
-        return new SampleBaseSyncWpfForm(wrappedObject, 0);
+        return new SampleBaseSyncViewModel(wrappedObject, 0);
     }
 
     protected override SampleBackingObject CreateWrappedObject()

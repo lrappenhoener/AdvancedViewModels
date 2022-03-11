@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace PCC.Datastructures.CSharp.WpfForm;
+namespace PCC.Datastructures.CSharp.BaseViewModel;
 
 internal class ComplexProperties : ITrackChanges
 {

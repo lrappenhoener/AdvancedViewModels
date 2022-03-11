@@ -1,4 +1,4 @@
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
+namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 #nullable disable
 
 public class SampleBackingObject

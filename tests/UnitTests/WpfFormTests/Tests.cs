@@ -1,16 +1,16 @@
 using FluentAssertions;
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
+using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.WpfFormTests;
+namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.WpfFormTests;
 
 #nullable disable
 
 public abstract class Tests
 {
-    protected abstract SampleBaseSyncWpfForm CreateSut();
+    protected abstract SampleBaseSyncViewModel CreateSut();
     
-    protected abstract SampleBaseSyncWpfForm CreateComplex();
+    protected abstract SampleBaseSyncViewModel CreateComplex();
     
     [Fact]
     public void IsDirty_When_Value_Property_Changed()

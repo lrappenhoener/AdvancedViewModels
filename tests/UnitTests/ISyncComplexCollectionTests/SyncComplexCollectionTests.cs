@@ -1,28 +1,28 @@
 using System.Collections.Generic;
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
+using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.ISyncComplexCollectionTests;
+namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.ISyncComplexCollectionTests;
 
 public class SyncComplexCollectionTests : Tests
 {
-    protected override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut()
+    protected override SyncComplexCollection<SampleBaseSyncViewModel> CreateSut()
     {
-        return new SyncComplexCollection<SampleBaseSyncWpfForm>();
+        return new SyncComplexCollection<SampleBaseSyncViewModel>();
     }
 
-    protected override SyncComplexCollection<SampleBaseSyncWpfForm> CreateSut(List<SampleBaseSyncWpfForm> elements)
+    protected override SyncComplexCollection<SampleBaseSyncViewModel> CreateSut(List<SampleBaseSyncViewModel> elements)
     {
-        return new SyncComplexCollection<SampleBaseSyncWpfForm>(elements);
+        return new SyncComplexCollection<SampleBaseSyncViewModel>(elements);
     }
 
-    protected override SampleBaseSyncWpfForm CreateElement()
+    protected override SampleBaseSyncViewModel CreateElement()
     {
-        return new SampleBaseSyncWpfForm(new SampleBackingObject(0), 0);
+        return new SampleBaseSyncViewModel(new SampleBackingObject(0), 0);
     }
 
-    protected override List<SampleBaseSyncWpfForm> CreateElements(int count)
+    protected override List<SampleBaseSyncViewModel> CreateElements(int count)
     {
-        var elements = new List<SampleBaseSyncWpfForm>();
+        var elements = new List<SampleBaseSyncViewModel>();
         for (int i = 0; i < count; i++)
         {
             elements.Add(CreateElement());

@@ -1,12 +1,12 @@
 using FluentAssertions;
-using PCC.Datastructures.CSharp.WpfForm.UnitTests.Common;
+using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.WpfForm.UnitTests.SyncWpfFormTests;
+namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.SyncWpfFormTests;
 
 public abstract class Tests
 {
-    protected abstract SampleBaseSyncWpfForm CreateSut(SampleBackingObject wrappedObject);
+    protected abstract SampleBaseSyncViewModel CreateSut(SampleBackingObject wrappedObject);
     protected abstract SampleBackingObject CreateWrappedObject();
 
     [Fact]
@@ -53,7 +53,7 @@ public abstract class Tests
         var childWrappedObject = CreateWrappedObject();
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        sut.SomeComplex = new SampleBaseSyncWpfForm(childWrappedObject, 0);
+        sut.SomeComplex = new SampleBaseSyncViewModel(childWrappedObject, 0);
         var expected = sut.SomeComplex.SomeInteger + 1;
 
         sut.SomeComplex.SomeInteger++;

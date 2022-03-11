@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTest
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5052B5A8-094D-4579-B3D2-AA4EB0CF1457}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfForm", "src\WpfForm\WpfForm.csproj", "{8D12774A-334F-4A9E-AEF0-3FBBC514F666}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseViewModel", "src\BaseViewModel\BaseViewModel.csproj", "{8D12774A-334F-4A9E-AEF0-3FBBC514F666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,22 +1,22 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PCC.Datastructures.CSharp.WpfForm;
+namespace PCC.Datastructures.CSharp.BaseViewModel;
 
-public abstract class BaseWpfForm : IComplexProperty
+public abstract class BaseViewModel : IComplexProperty
 {
     private readonly SimpleProperties _simpleProperties;
     private readonly ComplexProperties _complexProperties;
 
-    protected BaseWpfForm(object store) : this(new ReflectionSimpleProperties(store))
+    protected BaseViewModel(object store) : this(new ReflectionSimpleProperties(store))
     {
     }
 
-    protected BaseWpfForm() : this(new DefaultSimpleProperties())
+    protected BaseViewModel() : this(new DefaultSimpleProperties())
     {
     }
 
-    private BaseWpfForm(SimpleProperties simpleProperties)
+    private BaseViewModel(SimpleProperties simpleProperties)
     {
         _simpleProperties = simpleProperties;
         _simpleProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);

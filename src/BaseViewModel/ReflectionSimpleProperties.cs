@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace PCC.Datastructures.CSharp.WpfForm;
+namespace PCC.Datastructures.CSharp.BaseViewModel;
 
 public class ReflectionSimpleProperties : SimpleProperties
 {

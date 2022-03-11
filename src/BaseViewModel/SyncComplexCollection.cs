@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace PCC.Datastructures.CSharp.WpfForm;
+namespace PCC.Datastructures.CSharp.BaseViewModel;
 
 public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : IComplexProperty
 {
