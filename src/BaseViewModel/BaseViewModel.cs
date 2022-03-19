@@ -28,7 +28,7 @@ public abstract class BaseViewModel : IComplexProperty
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
     public bool IsDirtyAndValid { get; }
-    public bool IsValid { get; private set; }
+    public bool IsValid { get; private set; } = true;
 
     public void AcceptChanges()
     {
@@ -45,8 +45,14 @@ public abstract class BaseViewModel : IComplexProperty
     protected void SetProperty(object value, [CallerMemberName] string propertyName = "")
     {
         _simpleProperties.SetProperty(propertyName, value);
+        Validate();
     }
-    
+
+    private void Validate()
+    {
+        IsValid = false;
+    }
+
     protected T GetProperty<T>([CallerMemberName] string propertyName = "")
     {
         return _simpleProperties.GetProperty<T>(propertyName);
