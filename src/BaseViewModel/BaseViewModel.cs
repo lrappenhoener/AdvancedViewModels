@@ -23,12 +23,13 @@ public abstract class BaseViewModel : IComplexProperty
         _simpleProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
         _complexProperties = new ComplexProperties();
         _complexProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
+        Validate();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
     public bool IsDirtyAndValid { get; }
-    public bool IsValid { get; private set; } = true;
+    public bool IsValid { get; private set; }
 
     public void AcceptChanges()
     {
@@ -50,7 +51,8 @@ public abstract class BaseViewModel : IComplexProperty
 
     private void Validate()
     {
-        IsValid = false;
+        var results = ValidateImpl();
+        IsValid = !results.Any();
     }
 
     protected T GetProperty<T>([CallerMemberName] string propertyName = "")
