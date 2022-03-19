@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -26,6 +27,8 @@ public abstract class BaseViewModel : IComplexProperty
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
+    public bool IsDirtyAndValid { get; }
+    public bool IsValid { get; }
 
     public void AcceptChanges()
     {
@@ -64,4 +67,12 @@ public abstract class BaseViewModel : IComplexProperty
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));
     }
+
+    public IEnumerable GetErrors(string propertyName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasErrors { get; }
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 }

@@ -77,6 +77,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
                 return true;
         return false;
     }}
+
+    public bool IsDirtyAndValid { get; }
+    public bool IsValid { get; }
+
     public void AcceptChanges()
     {
         foreach (var dirtyElement in _currentElements.Where(e => e.IsDirty))
@@ -151,4 +155,12 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         get => _currentElements[index];
         set => _currentElements[index] = value;
     }
+
+    public IEnumerable GetErrors(string propertyName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool HasErrors { get; }
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 }
