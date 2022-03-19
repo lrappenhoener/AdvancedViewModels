@@ -12,8 +12,6 @@ internal class ComplexProperties : ITrackChanges
     public event PropertyChangedEventHandler? PropertyChanged;
     
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
-    public bool IsDirtyAndValid { get; }
-    public bool IsValid { get; }
 
     public void SetProperty(string complexPropertyName, IComplexProperty? complexProperty)
     {
@@ -76,12 +74,4 @@ internal class ComplexProperties : ITrackChanges
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    public IEnumerable GetErrors(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool HasErrors { get; }
-    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 }
