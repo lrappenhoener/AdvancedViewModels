@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 
 public class SampleBaseSyncViewModel : BaseViewModel
@@ -49,5 +51,21 @@ public class SampleBaseSyncViewModel : BaseViewModel
     {
         get => GetComplexProperty<SyncComplexCollection<SampleBaseSyncViewModel>>();
         set => SetComplexProperty(value);
+    }
+
+    public bool ValidationCalled { get; private set; }
+
+    protected override IEnumerable<FailedPropertyValidation> ValidateImpl()
+    {
+        ValidationCalled = true;
+        var results = new List<FailedPropertyValidation>();
+        
+        if (SomeInteger < 0)
+            results.Add(new FailedPropertyValidation(nameof(SomeInteger), new List<string>
+            {
+                "SomeInteger < 0"
+            }));
+        
+        return results;
     }
 }
