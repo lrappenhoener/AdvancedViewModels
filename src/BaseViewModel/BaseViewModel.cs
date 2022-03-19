@@ -75,4 +75,9 @@ public abstract class BaseViewModel : IComplexProperty
 
     public bool HasErrors { get; }
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+    protected virtual IEnumerable<FailedPropertyValidation> Validate()
+    {
+        return new List<FailedPropertyValidation>();
+    }
 }
