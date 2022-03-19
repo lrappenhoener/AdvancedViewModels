@@ -31,6 +31,17 @@ public abstract class Tests
     }
     
     [Fact]
+    public void IsValid_Is_True_When_Changing_Invalid_Instance_To_Valid()
+    {
+        var sut = CreateSut();
+        sut.SomeInteger = -1;
+
+        sut.SomeInteger = 42;
+
+        sut.IsValid.Should().BeTrue();
+    }
+    
+    [Fact]
     public void IsDirty_When_Value_Property_Changed()
     {
         var sut = CreateSut();
