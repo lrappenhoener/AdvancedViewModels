@@ -20,6 +20,15 @@ public abstract class Tests
         sut.IsValid.Should().BeTrue();
     }
 
+    [Fact]
+    public void IsValid_Is_False_When_Invalid_Instance()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = -1;
+
+        sut.IsValid.Should().BeFalse();
+    }
     
     [Fact]
     public void IsDirty_When_Value_Property_Changed()
