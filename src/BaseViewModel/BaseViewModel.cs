@@ -60,24 +60,26 @@ public abstract class BaseViewModel : IComplexProperty
         var results = ValidateImpl();
         var fixedErrors = _errors.Where(e => results.All(ee => ee.PropertyName != e.Key)).ToList();
         var newErrors = results.Where(e => _errors.All(ee => ee.Key != e.PropertyName)).ToList();
-        var stillErrors = results.Where(e => _errors.Any(ee => ee.Key == e.PropertyName)).ToList();
         var fireHasErrorsPropertyChanged = fixedErrors.Any() || newErrors.Any();
         
         _errors.Clear();
         
-        foreach (var failedPropertyValidation in results)
+        foreach (var newError in newErrors)
         {
-            _errors[failedPropertyValidation.PropertyName] = failedPropertyValidation.Errors;
-            FireErrorChanged(failedPropertyValidation.PropertyName);
+            _errors.Add(newError.PropertyName, newError.Errors);
+            FireErrorChanged(newError.PropertyName);
         }
 
         foreach (var fixedError in fixedErrors)
         {
             FireErrorChanged(fixedError.Key);
         }
-        
+
         if (fireHasErrorsPropertyChanged)
+        {
             FirePropertyChanged(nameof(HasErrors));
+            FirePropertyChanged(nameof(CanSave));
+        }
     }
 
     protected T GetProperty<T>([CallerMemberName] string propertyName = "")
