@@ -8,6 +8,8 @@ public abstract class BaseViewModel : IComplexProperty
 {
     private readonly SimpleProperties _simpleProperties;
     private readonly ComplexProperties _complexProperties;
+    private readonly Dictionary<string, IEnumerable<string>> _errors =
+        new Dictionary<string, IEnumerable<string>>();
 
     protected BaseViewModel(object store) : this(new ReflectionSimpleProperties(store))
     {
@@ -22,14 +24,19 @@ public abstract class BaseViewModel : IComplexProperty
         _simpleProperties = simpleProperties;
         _simpleProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
         _complexProperties = new ComplexProperties();
-        _complexProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
+        _complexProperties.PropertyChanged += (_, e) => ComplexPropertyChanged(e.PropertyName);
         Validate();
+    }
+
+    private void ComplexPropertyChanged(string propertyName)
+    {
+        FirePropertyChanged(propertyName);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
     public bool IsDirtyAndValid { get; }
-    public bool IsValid { get; private set; }
+    public bool IsValid => !_errors.Any();
 
     public void AcceptChanges()
     {
@@ -52,7 +59,19 @@ public abstract class BaseViewModel : IComplexProperty
     private void Validate()
     {
         var results = ValidateImpl();
-        IsValid = !results.Any();
+        var fixedErrors = _errors.Where(e => results.All(ee => ee.PropertyName != e.Key)).ToList();
+
+        _errors.Clear();
+        foreach (var failedPropertyValidation in results)
+        {
+            _errors[failedPropertyValidation.PropertyName] = failedPropertyValidation.Errors;
+            FireErrorChanged(failedPropertyValidation.PropertyName);
+        }
+
+        foreach (var fixedError in fixedErrors)
+        {
+            FireErrorChanged(fixedError.Key);
+        }
     }
 
     protected T GetProperty<T>([CallerMemberName] string propertyName = "")
@@ -74,6 +93,11 @@ public abstract class BaseViewModel : IComplexProperty
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));
+    }
+    
+    private void FireErrorChanged(string propertyName)
+    {
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
     }
 
     public IEnumerable GetErrors(string propertyName)
