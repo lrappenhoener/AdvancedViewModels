@@ -19,6 +19,23 @@ public abstract class Tests
 
         sut.IsValid.Should().BeTrue();
     }
+    
+    [Fact]
+    public void ErrorsChanged_Fires_When_Property_Becomes_Invalid()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.ErrorsChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeInteger)) return;
+            invoked = true;
+        };
+        
+        sut.SomeInteger = -1;
+
+        invoked.Should().BeTrue();
+    }
+    
 
     [Fact]
     public void IsValid_Is_False_When_Invalid_Instance()
