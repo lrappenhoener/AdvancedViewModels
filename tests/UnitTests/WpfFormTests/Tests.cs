@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
 using Xunit;
@@ -18,6 +19,24 @@ public abstract class Tests
         var sut = CreateSut();
 
         sut.HasErrors.Should().BeFalse();
+    }
+    
+    [Fact]
+    public void GetErrors_Successful_Returns_Invalid_Property_Errors()
+    {
+        var sut = CreateSut();
+        sut.SomeInteger = -1;
+        
+        var errors = sut.GetErrors(nameof(sut.SomeInteger));
+
+        var count = 0;
+        foreach (var error in errors)
+        {
+            Assert.True((string) error == "SomeInteger < 0");
+            count++;
+        }
+
+        count.Should().Be(1);
     }
     
     [Fact]
