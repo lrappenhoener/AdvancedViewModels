@@ -22,6 +22,15 @@ public abstract class Tests
     }
     
     [Fact]
+    public void CanSave_Is_False_When_Invalid_Dirty_Instance()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = -1;
+        
+        sut.CanSave.Should().BeFalse();
+    }
+    [Fact]
     public void IsValid_Is_True_When_Valid_Instance()
     {
         var sut = CreateSut();
