@@ -14,6 +14,14 @@ public abstract class Tests
     protected abstract SampleBaseSyncViewModel CreateComplex();
 
     [Fact]
+    public void CanSave_Is_False_When_Valid_Instance_Not_Dirty()
+    {
+        var sut = CreateSut();
+
+        sut.CanSave.Should().BeFalse();
+    }
+    
+    [Fact]
     public void IsValid_Is_True_When_Valid_Instance()
     {
         var sut = CreateSut();
