@@ -59,8 +59,12 @@ public abstract class BaseViewModel : IComplexProperty
     {
         var results = ValidateImpl();
         var fixedErrors = _errors.Where(e => results.All(ee => ee.PropertyName != e.Key)).ToList();
-
+        var newErrors = results.Where(e => _errors.All(ee => ee.Key != e.PropertyName)).ToList();
+        var stillErrors = results.Where(e => _errors.Any(ee => ee.Key == e.PropertyName)).ToList();
+        var fireHasErrorsPropertyChanged = fixedErrors.Any() || newErrors.Any();
+        
         _errors.Clear();
+        
         foreach (var failedPropertyValidation in results)
         {
             _errors[failedPropertyValidation.PropertyName] = failedPropertyValidation.Errors;
@@ -71,6 +75,9 @@ public abstract class BaseViewModel : IComplexProperty
         {
             FireErrorChanged(fixedError.Key);
         }
+        
+        if (fireHasErrorsPropertyChanged)
+            FirePropertyChanged(nameof(HasErrors));
     }
 
     protected T GetProperty<T>([CallerMemberName] string propertyName = "")
