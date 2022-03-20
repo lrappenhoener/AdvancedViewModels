@@ -133,6 +133,23 @@ public abstract class Tests
     }
     
     [Fact]
+    public void ErrorsChanged_Not_Fires_For_Already_Existing_Property_Error()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.SomeInteger = -1;
+        sut.ErrorsChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.SomeInteger)) return;
+            invoked = true;
+        };
+        
+        sut.SomeInteger = -2;
+
+        invoked.Should().BeFalse();
+    }
+    
+    [Fact]
     public void HasErrors_PropertyChanged_Fires_When_Property_Becomes_Invalid()
     {
         var sut = CreateSut();
