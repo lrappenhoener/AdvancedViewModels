@@ -32,6 +32,22 @@ public abstract class Tests
     }
     
     [Fact]
+    public void CanSave_PropertyChanged_Fires_When_Invalid_Instance()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.CanSave))
+                return;
+            invoked = true;
+        };
+
+        sut.SomeInteger = -1;
+
+        invoked.Should().BeTrue();
+    }
+    [Fact]
     public void CanSave_Is_True_When_Valid_Dirty_Instance()
     {
         var sut = CreateSut();
