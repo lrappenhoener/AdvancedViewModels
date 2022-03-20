@@ -17,7 +17,7 @@ public abstract class Tests
     {
         var sut = CreateSut();
 
-        sut.IsValid.Should().BeTrue();
+        sut.HasErrors.Should().BeFalse();
     }
     
     [Fact]
@@ -60,7 +60,7 @@ public abstract class Tests
 
         sut.SomeInteger = -1;
 
-        sut.IsValid.Should().BeFalse();
+        sut.HasErrors.Should().BeTrue();
     }
     
     [Fact]
@@ -71,7 +71,7 @@ public abstract class Tests
 
         sut.SomeInteger = 42;
 
-        sut.IsValid.Should().BeTrue();
+        sut.HasErrors.Should().BeFalse();
     }
     
     [Fact]

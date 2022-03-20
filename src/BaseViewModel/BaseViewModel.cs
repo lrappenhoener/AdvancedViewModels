@@ -35,9 +35,8 @@ public abstract class BaseViewModel : IComplexProperty
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
-    public bool IsDirtyAndValid { get; }
-    public bool IsValid => !_errors.Any();
-
+    public bool CanSave { get; }
+    
     public void AcceptChanges()
     {
         _complexProperties.AcceptChanges();
@@ -104,8 +103,8 @@ public abstract class BaseViewModel : IComplexProperty
     {
         throw new NotImplementedException();
     }
-
-    public bool HasErrors { get; }
+    
+    public bool HasErrors => _errors.Any();
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     protected virtual IEnumerable<FailedPropertyValidation> ValidateImpl()
