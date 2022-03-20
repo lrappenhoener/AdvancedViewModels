@@ -77,7 +77,7 @@ public abstract class Tests
     }
     
     [Fact]
-    public void IsValid_Is_True_When_Valid_Instance()
+    public void HasErrors_Is_False_When_Valid_Instance()
     {
         var sut = CreateSut();
 
@@ -200,7 +200,7 @@ public abstract class Tests
     }
 
     [Fact]
-    public void IsValid_Is_False_When_Invalid_Instance()
+    public void HasErrors_Is_True_When_Invalid_Instance()
     {
         var sut = CreateSut();
 
@@ -210,7 +210,7 @@ public abstract class Tests
     }
     
     [Fact]
-    public void IsValid_Is_True_When_Changing_Invalid_Instance_To_Valid()
+    public void HasErrors_Is_False_When_Changing_Invalid_Instance_To_Valid()
     {
         var sut = CreateSut();
         sut.SomeInteger = -1;
