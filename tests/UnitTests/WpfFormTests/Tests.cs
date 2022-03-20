@@ -40,6 +40,20 @@ public abstract class Tests
     }
     
     [Fact]
+    public void GetErrors_Successful_Returns_Empty_List()
+    {
+        var sut = CreateSut();
+        
+        var errors = sut.GetErrors(nameof(sut.SomeInteger));
+
+        var count = 0;
+        foreach (var error in errors)
+            count++;
+
+        count.Should().Be(0);
+    }
+    
+    [Fact]
     public void ErrorsChanged_Fires_When_Property_Becomes_Invalid()
     {
         var sut = CreateSut();
