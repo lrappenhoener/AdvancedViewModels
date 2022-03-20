@@ -25,7 +25,13 @@ public abstract class BaseViewModel : IComplexProperty
         _simpleProperties.PropertyChanged += (_, e) => FirePropertyChanged(e.PropertyName);
         _complexProperties = new ComplexProperties();
         _complexProperties.PropertyChanged += (_, e) => ComplexPropertyChanged(e.PropertyName);
+        _complexProperties.ErrorsChanged += OnComplexErrorsChanged;
         Validate();
+    }
+
+    private void OnComplexErrorsChanged(string propertyName, object property, Dictionary<string, IEnumerable<string>> errors)
+    {
+        FireErrorChanged(propertyName);
     }
 
     private void ComplexPropertyChanged(string propertyName)
@@ -116,7 +122,7 @@ public abstract class BaseViewModel : IComplexProperty
         return _errors[propertyName];
     }
     
-    public bool HasErrors => _errors.Any();
+    public bool HasErrors => _errors.Any() || _complexProperties.HasErrors;
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     protected virtual IEnumerable<FailedPropertyValidation> ValidateImpl()

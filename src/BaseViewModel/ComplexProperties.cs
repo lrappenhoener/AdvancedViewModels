@@ -8,10 +8,14 @@ internal class ComplexProperties : ITrackChanges
     private readonly Dictionary<string, ComplexPropertyRegistration>
         _complexPropertyRegistrations =
             new Dictionary<string, ComplexPropertyRegistration>();
-    
+
+    private readonly Dictionary<string, Dictionary<string, IEnumerable<string>>> _errors = new Dictionary<string, Dictionary<string, IEnumerable<string>> >();
+
     public event PropertyChangedEventHandler? PropertyChanged;
+    public event Action<string, object, Dictionary<string, IEnumerable<string>>> ErrorsChanged;
     
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
+    public bool HasErrors => _errors.Any();
 
     public void SetProperty(string complexPropertyName, IComplexProperty? complexProperty)
     {
@@ -52,16 +56,40 @@ internal class ComplexProperties : ITrackChanges
     
     private void RegisterComplexProperty(string complexPropertyName, IComplexProperty complexProperty)
     {
-        var handler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
-        complexProperty.PropertyChanged += handler;
+        var propertyChangedHandler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
+        complexProperty.PropertyChanged += propertyChangedHandler;
+        
+        var errorsChangedHandler =
+            new EventHandler<DataErrorsChangedEventArgs>((o, e) => OnErrorsChanged(complexPropertyName, o, e));
+        complexProperty.ErrorsChanged += errorsChangedHandler;
+        
         _complexPropertyRegistrations.Add(complexPropertyName,
-            new ComplexPropertyRegistration(complexPropertyName, handler, complexProperty));
+            new ComplexPropertyRegistration(complexPropertyName, propertyChangedHandler, errorsChangedHandler, complexProperty));
     }
-    
+
+    private void OnErrorsChanged(string complexPropertyName, object sender, DataErrorsChangedEventArgs e)
+    {
+        var complexProperty = sender as IComplexProperty;
+        var propertyName = e.PropertyName;
+        var errors = (IEnumerable<string>)complexProperty.GetErrors(propertyName);
+        
+        if (!_errors.ContainsKey(complexPropertyName))
+            _errors.Add(complexPropertyName, new Dictionary<string, IEnumerable<string>>());
+
+        var complexPropertyErrors = _errors[complexPropertyName];
+        if (complexPropertyErrors.ContainsKey(propertyName))
+            complexPropertyErrors.Remove(propertyName);
+
+        complexPropertyErrors.Add(propertyName, errors);
+        
+        ErrorsChanged?.Invoke(complexPropertyName, complexProperty, complexPropertyErrors);
+    }
+
     private void UnregisterComplexProperty(string complexPropertyName)
     {
         var registration = _complexPropertyRegistrations[complexPropertyName];
-        registration.Target.PropertyChanged -= registration.Handler;
+        registration.Target.PropertyChanged -= registration.PropertyChangedHandler;
+        registration.Target.ErrorsChanged -= registration.ErrorsChangedHandler;
         _complexPropertyRegistrations.Remove(complexPropertyName);
     }
     
