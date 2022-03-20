@@ -30,6 +30,17 @@ public abstract class Tests
         
         sut.CanSave.Should().BeFalse();
     }
+    
+    [Fact]
+    public void CanSave_Is_True_When_Valid_Dirty_Instance()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = 88;
+        
+        sut.CanSave.Should().BeTrue();
+    }
+    
     [Fact]
     public void IsValid_Is_True_When_Valid_Instance()
     {
