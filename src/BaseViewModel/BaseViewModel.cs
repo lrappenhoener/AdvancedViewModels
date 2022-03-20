@@ -108,7 +108,10 @@ public abstract class BaseViewModel : IComplexProperty
 
     public IEnumerable GetErrors(string propertyName)
     {
-        throw new NotImplementedException();
+        if (!_errors.ContainsKey(propertyName))
+            return new List<string>();
+        
+        return _errors[propertyName];
     }
     
     public bool HasErrors => _errors.Any();
