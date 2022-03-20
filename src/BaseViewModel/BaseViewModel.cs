@@ -35,7 +35,7 @@ public abstract class BaseViewModel : IComplexProperty
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
-    public bool CanSave { get; }
+    public bool CanSave => IsDirty && !HasErrors;
     
     public void AcceptChanges()
     {
