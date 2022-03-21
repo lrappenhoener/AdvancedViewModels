@@ -9,6 +9,8 @@ public abstract class Tests
     protected abstract SampleBaseSyncViewModel CreateSut(SampleBackingObject wrappedObject);
     protected abstract SampleBackingObject CreateWrappedObject();
 
+    #region Set
+
     [Fact]
     public void Changed_Value_Property_Without_Accepting_Does_Not_Update_Wrapped_Object()
     {
@@ -20,7 +22,11 @@ public abstract class Tests
 
         wrappedObject.SomeInteger.Should().Be(original);
     }
-    
+
+    #endregion
+
+    #region AcceptChanges
+
     [Fact]
     public void Accepted_Changed_Value_Property_Successful_Updates_Wrapped_Object()
     {
@@ -61,4 +67,6 @@ public abstract class Tests
 
         childWrappedObject.SomeInteger.Should().Be(expected);
     }
+
+    #endregion
 }

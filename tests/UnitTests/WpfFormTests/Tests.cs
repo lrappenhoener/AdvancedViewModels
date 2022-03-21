@@ -13,6 +13,7 @@ public abstract class Tests
     
     protected abstract SampleBaseSyncViewModel CreateComplex();
 
+    #region CanSave
     [Fact]
     public void CanSave_Is_False_When_Valid_Instance_Not_Dirty()
     {
@@ -76,6 +77,43 @@ public abstract class Tests
         sut.CanSave.Should().BeTrue();
     }
     
+    #endregion
+
+    #region HasErrors
+
+    [Fact]
+    public void HasErrors_PropertyChanged_Fires_When_Property_Becomes_Invalid()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.HasErrors)) return;
+            invoked = true;
+        };
+        
+        sut.SomeInteger = -1;
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void HasErrors_PropertyChanged_Fires_When_Property_Becomes_Valid()
+    {
+        var sut = CreateSut();
+        var invoked = false;
+        sut.SomeInteger = -1;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.HasErrors)) return;
+            invoked = true;
+        };
+        
+        sut.SomeInteger = 42;
+
+        invoked.Should().BeTrue();
+    }
+
     [Fact]
     public void HasErrors_Is_False_When_Valid_Instance()
     {
@@ -84,6 +122,41 @@ public abstract class Tests
         sut.HasErrors.Should().BeFalse();
     }
     
+    [Fact]
+    public void HasErrors_Is_True_When_Invalid_Instance()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = -1;
+
+        sut.HasErrors.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void HasErrors_Is_True_When_Invalid_Complex_Property()
+    {
+        var sut = CreateSut();
+
+        sut.SomeComplex.SomeInteger = -1;
+
+        sut.HasErrors.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void HasErrors_Is_False_When_Changing_Invalid_Instance_To_Valid()
+    {
+        var sut = CreateSut();
+        sut.SomeInteger = -1;
+
+        sut.SomeInteger = 42;
+
+        sut.HasErrors.Should().BeFalse();
+    }
+    
+    #endregion
+
+    #region GetErrors
+
     [Fact]
     public void GetErrors_Successful_Returns_Invalid_Property_Errors()
     {
@@ -115,7 +188,11 @@ public abstract class Tests
 
         count.Should().Be(0);
     }
-    
+
+    #endregion
+
+    #region ErrorsChanged
+
     [Fact]
     public void ErrorsChanged_Fires_When_Property_Becomes_Invalid()
     {
@@ -150,39 +227,6 @@ public abstract class Tests
     }
     
     [Fact]
-    public void HasErrors_PropertyChanged_Fires_When_Property_Becomes_Invalid()
-    {
-        var sut = CreateSut();
-        var invoked = false;
-        sut.PropertyChanged += (o, e) =>
-        {
-            if (e.PropertyName != nameof(sut.HasErrors)) return;
-            invoked = true;
-        };
-        
-        sut.SomeInteger = -1;
-
-        invoked.Should().BeTrue();
-    }
-    
-    [Fact]
-    public void HasErrors_PropertyChanged_Fires_When_Property_Becomes_Valid()
-    {
-        var sut = CreateSut();
-        var invoked = false;
-        sut.SomeInteger = -1;
-        sut.PropertyChanged += (o, e) =>
-        {
-            if (e.PropertyName != nameof(sut.HasErrors)) return;
-            invoked = true;
-        };
-        
-        sut.SomeInteger = 42;
-
-        invoked.Should().BeTrue();
-    }
-    
-    [Fact]
     public void ErrorsChanged_Fires_When_Invalid_Property_Becomes_Valid()
     {
         var sut = CreateSut();
@@ -199,37 +243,10 @@ public abstract class Tests
         invoked.Should().BeTrue();
     }
 
-    [Fact]
-    public void HasErrors_Is_True_When_Invalid_Instance()
-    {
-        var sut = CreateSut();
+    #endregion
 
-        sut.SomeInteger = -1;
+    #region IsDirty
 
-        sut.HasErrors.Should().BeTrue();
-    }
-    
-    [Fact]
-    public void HasErrors_Is_True_When_Invalid_Complex_Property()
-    {
-        var sut = CreateSut();
-
-        sut.SomeComplex.SomeInteger = -1;
-
-        sut.HasErrors.Should().BeTrue();
-    }
-    
-    [Fact]
-    public void HasErrors_Is_False_When_Changing_Invalid_Instance_To_Valid()
-    {
-        var sut = CreateSut();
-        sut.SomeInteger = -1;
-
-        sut.SomeInteger = 42;
-
-        sut.HasErrors.Should().BeFalse();
-    }
-    
     [Fact]
     public void IsDirty_When_Value_Property_Changed()
     {
@@ -249,6 +266,62 @@ public abstract class Tests
 
         sut.IsDirty.Should().BeTrue();
     }
+
+    [Fact]
+    public void IsDirty_Is_False_When_Value_Property_Changed_And_Accepted()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = 2022;
+        sut.AcceptChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
+    [Fact]
+    public void IsDirty_Is_False_When_Value_Property_Changed_And_Rejected()
+    {
+        var sut = CreateSut();
+
+        sut.SomeInteger = 2022;
+        sut.RejectChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
+    [Fact]
+    public void IsDirty_Is_False_When_Reference_Property_Changed_And_Rejected()
+    {
+        var sut = CreateSut();
+
+        sut.SomeReference = new object();
+        sut.RejectChanges();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
+    [Fact]  
+    public void IsDirty_Is_False_Initially()
+    {
+        var sut = CreateSut();
+
+        sut.IsDirty.Should().BeFalse();
+    }
+    
+    [Fact]
+    public void IsDirty_When_Reference_Property_Changed()
+    {
+        var sut = CreateSut();
+
+        sut.SomeReference = new object();
+
+        sut.IsDirty.Should().BeTrue();
+    }
+    
+    #endregion
+
+    #region PropertyChanged
+
     [Fact]
     public void PropertyChanged_Fires_When_Value_Property_Changed()
     {
@@ -410,58 +483,11 @@ public abstract class Tests
 
         invoked.Should().BeTrue();
     }
-    
-    [Fact]
-    public void IsDirty_Is_False_When_Value_Property_Changed_And_Accepted()
-    {
-        var sut = CreateSut();
 
-        sut.SomeInteger = 2022;
-        sut.AcceptChanges();
+    #endregion
 
-        sut.IsDirty.Should().BeFalse();
-    }
-    
-    [Fact]
-    public void IsDirty_Is_False_When_Value_Property_Changed_And_Rejected()
-    {
-        var sut = CreateSut();
+    #region Get
 
-        sut.SomeInteger = 2022;
-        sut.RejectChanges();
-
-        sut.IsDirty.Should().BeFalse();
-    }
-    
-    [Fact]
-    public void IsDirty_Is_False_When_Reference_Property_Changed_And_Rejected()
-    {
-        var sut = CreateSut();
-
-        sut.SomeReference = new object();
-        sut.RejectChanges();
-
-        sut.IsDirty.Should().BeFalse();
-    }
-    
-    [Fact]  
-    public void IsDirty_Is_False_Initially()
-    {
-        var sut = CreateSut();
-
-        sut.IsDirty.Should().BeFalse();
-    }
-    
-    [Fact]
-    public void IsDirty_When_Reference_Property_Changed()
-    {
-        var sut = CreateSut();
-
-        sut.SomeReference = new object();
-
-        sut.IsDirty.Should().BeTrue();
-    }
-    
     [Fact]
     public void Get_Correct_Value_Property()
     {
@@ -483,7 +509,31 @@ public abstract class Tests
         
         sut.SomeReference.Should().Be(expected);
     }
+
+    [Fact]
+    public void Get_On_Uninitialized_Complex_Property_Does_Not_Throw()
+    {
+        var sut = CreateSut();
+
+        var result = Record.Exception(() => sut.NullComplex);
+        
+        Assert.Null(result);
+    }
     
+    [Fact]
+    public void Get_On_Uninitialized_Value_Property_Does_Not_Throw()
+    {
+        var sut = CreateSut();
+
+        var result = Record.Exception(() => sut.UninitializedInteger);
+        
+        Assert.Null(result);
+    }
+    
+    #endregion
+
+    #region RejectChanges
+
     [Fact]
     public void Rejected_Changed_Complex_Property_Successful_Reset_Changes()
     {
@@ -523,26 +573,10 @@ public abstract class Tests
         sut.SomeInteger.Should().Be(expected);
     }
 
-    [Fact]
-    public void Get_On_Uninitialized_Complex_Property_Does_Not_Throw()
-    {
-        var sut = CreateSut();
+    #endregion
 
-        var result = Record.Exception(() => sut.NullComplex);
-        
-        Assert.Null(result);
-    }
-    
-    [Fact]
-    public void Get_On_Uninitialized_Value_Property_Does_Not_Throw()
-    {
-        var sut = CreateSut();
+    #region Set
 
-        var result = Record.Exception(() => sut.UninitializedInteger);
-        
-        Assert.Null(result);
-    }
-    
     [Fact]
     public void Setting_Property_Multiple_Times_Does_Not_Throw()
     {
@@ -553,4 +587,6 @@ public abstract class Tests
         
         Assert.Null(exception);
     }
+
+    #endregion
 }
