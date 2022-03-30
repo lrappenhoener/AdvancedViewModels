@@ -160,6 +160,6 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         throw new NotImplementedException();
     }
 
-    public bool HasErrors { get; }
+    public bool HasErrors => _currentElements.Any(e => e.HasErrors);
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 }
