@@ -22,8 +22,4 @@
       <PackageOutputPath>g:\Packages\Private\</PackageOutputPath>
       <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Nulls" Version="1.0.1" />
-    </ItemGroup>
 </Project>
