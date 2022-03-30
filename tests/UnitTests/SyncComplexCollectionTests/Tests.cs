@@ -701,6 +701,19 @@ public abstract class Tests
     }
     
     [Fact]
+    public void CanSave_After_RejectChanges_False()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        
+        sut.Add(element);
+        sut.RejectChanges();
+        
+        sut.CanSave.Should().BeFalse();
+    }
+    
+    [Fact]
     public void CanSave_When_Added_Element_HasErrors_False()
     {
         var elements = CreateElements(10);
