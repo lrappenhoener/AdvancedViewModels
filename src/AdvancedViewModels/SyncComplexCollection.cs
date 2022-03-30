@@ -29,6 +29,11 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
             currentElement.PropertyChanged += OnElementPropertyChanged;
     }
 
+    private void OnElementErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+    {
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(""));        
+    }
+
     private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName != nameof(IsDirty))
