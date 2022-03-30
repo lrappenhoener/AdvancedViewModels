@@ -55,6 +55,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         
         CollectionChanged?.Invoke(this, e);
         OnPropertyChanged(nameof(IsDirty));
+        OnPropertyChanged(nameof(CanSave));
     }
 
     private void Unhook(IEnumerable<IComplexProperty> complexProperties)
