@@ -26,7 +26,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         _currentElements = new ObservableCollection<T>(source);
         _currentElements.CollectionChanged += OnCollectionChanged;
         foreach (var currentElement in _currentElements)
+        {
             currentElement.PropertyChanged += OnElementPropertyChanged;
+            currentElement.ErrorsChanged += OnElementErrorsChanged;
+        }
     }
 
     private void OnElementErrorsChanged(object sender, DataErrorsChangedEventArgs e)
