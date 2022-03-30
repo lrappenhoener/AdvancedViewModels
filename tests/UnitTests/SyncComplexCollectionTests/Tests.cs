@@ -622,6 +622,19 @@ public abstract class Tests
 
         sut.HasErrors.Should().BeTrue();
     }
+
+    [Fact]
+    public void ErrorsChanged_Fires_When_Element_Gets_Errors()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var invoked = false;
+        sut.ErrorsChanged += (o, e) => invoked = true;
+        
+        elements.First().SomeInteger = -42;
+
+        invoked.Should().BeTrue();
+    }
     
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
