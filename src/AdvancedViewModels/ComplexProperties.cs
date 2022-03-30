@@ -1,4 +1,3 @@
-using System.Collections;
 using System.ComponentModel;
 
 namespace PCC.Libraries.AdvancedViewModels;
@@ -12,7 +11,7 @@ internal class ComplexProperties : ITrackChanges
     private readonly Dictionary<string, Dictionary<string, IEnumerable<string>>> _errors = new Dictionary<string, Dictionary<string, IEnumerable<string>> >();
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    public event Action<string, object, Dictionary<string, IEnumerable<string>>> ErrorsChanged;
+    public event Action<string, object, Dictionary<string, IEnumerable<string>>>? ErrorsChanged;
     
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
     public bool HasErrors => _errors.Any();
@@ -60,17 +59,20 @@ internal class ComplexProperties : ITrackChanges
         complexProperty.PropertyChanged += propertyChangedHandler;
         
         var errorsChangedHandler =
-            new EventHandler<DataErrorsChangedEventArgs>((o, e) => OnErrorsChanged(complexPropertyName, o, e));
+            new EventHandler<DataErrorsChangedEventArgs>((o, e) =>
+            {
+                if (o is not IComplexProperty sender) return;
+                var propertyName = e.PropertyName;
+                OnErrorsChanged(complexPropertyName, sender, propertyName);
+            });
         complexProperty.ErrorsChanged += errorsChangedHandler;
         
         _complexPropertyRegistrations.Add(complexPropertyName,
             new ComplexPropertyRegistration(complexPropertyName, propertyChangedHandler, errorsChangedHandler, complexProperty));
     }
 
-    private void OnErrorsChanged(string complexPropertyName, object sender, DataErrorsChangedEventArgs e)
+    private void OnErrorsChanged(string complexPropertyName, IComplexProperty complexProperty, string propertyName)
     {
-        var complexProperty = sender as IComplexProperty;
-        var propertyName = e.PropertyName;
         var errors = (IEnumerable<string>)complexProperty.GetErrors(propertyName);
         
         if (!_errors.ContainsKey(complexPropertyName))
