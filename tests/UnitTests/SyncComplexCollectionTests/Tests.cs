@@ -636,6 +636,21 @@ public abstract class Tests
         invoked.Should().BeTrue();
     }
     
+    [Fact]
+    public void ErrorsChanged_Not_Fires_When_Removed_Element_Gets_Errors()
+    {
+        var elements = CreateElements(10);
+        var element = elements.First();
+        var sut = CreateSut(elements);
+        sut.Remove(element);
+        var invoked = false;
+        sut.ErrorsChanged += (o, e) => invoked = true;
+        
+        element.SomeInteger = -42;
+
+        invoked.Should().BeFalse();
+    }
+    
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
         sut[3] = CreateElement();
