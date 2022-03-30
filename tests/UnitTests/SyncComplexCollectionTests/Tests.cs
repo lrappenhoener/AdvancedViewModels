@@ -688,6 +688,24 @@ public abstract class Tests
     }
     
     [Fact]
+    public void CanSave_PropertyChanged_Fires_When_Adding_Element()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        var invoked = false;
+        sut.PropertyChanged += (o, e) =>
+        {
+            if (e.PropertyName != nameof(sut.CanSave)) return;
+            invoked = true;
+        };
+        
+        sut.Add(element);
+        
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void CanSave_After_AcceptChanges_False()
     {
         var elements = CreateElements(10);
