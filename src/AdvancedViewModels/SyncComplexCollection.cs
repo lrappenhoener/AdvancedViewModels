@@ -60,7 +60,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     private void Unhook(IEnumerable<IComplexProperty> complexProperties)
     {
         foreach (var complexProperty in complexProperties)
+        {
             complexProperty.PropertyChanged -= OnElementPropertyChanged;
+            complexProperty.ErrorsChanged -= OnElementErrorsChanged;
+        }
     }
     
     private void Hook(IEnumerable<IComplexProperty> complexProperties)
