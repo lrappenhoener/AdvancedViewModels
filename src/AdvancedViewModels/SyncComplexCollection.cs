@@ -92,7 +92,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         return false;
     }}
 
-    public bool CanSave { get; }
+    public bool CanSave => IsDirty;
 
     public void AcceptChanges()
     {
