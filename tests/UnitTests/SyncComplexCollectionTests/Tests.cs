@@ -666,6 +666,15 @@ public abstract class Tests
         invoked.Should().BeFalse();
     }
     
+    [Fact]
+    public void CanSave_Initially_False()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        
+        sut.CanSave.Should().BeFalse();
+    }
+    
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
         sut[3] = CreateElement();
