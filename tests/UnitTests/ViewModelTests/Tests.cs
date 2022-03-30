@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using FluentAssertions;
-using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
+using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.WpfFormTests;
+namespace PCC.Libraries.AdvancedViewModels.UnitTests.ViewModelTests;
 
 #nullable disable
 
 public abstract class Tests
 {
-    protected abstract SampleBaseSyncViewModel CreateSut();
+    protected abstract SampleViewModel CreateSut();
     
-    protected abstract SampleBaseSyncViewModel CreateComplex();
+    protected abstract SampleViewModel CreateComplex();
 
     #region CanSave
     [Fact]

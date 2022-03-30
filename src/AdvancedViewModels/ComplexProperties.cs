@@ -1,7 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel;
+namespace PCC.Libraries.AdvancedViewModels;
 
 internal class ComplexProperties : ITrackChanges
 {

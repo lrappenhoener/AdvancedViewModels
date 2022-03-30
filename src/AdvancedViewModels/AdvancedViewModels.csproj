@@ -4,7 +4,7 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>PCC.Datastructures.CSharp.BaseViewModel</RootNamespace>
+        <RootNamespace>PCC.Libraries.AdvancedViewModels</RootNamespace>
         <LangVersion>10</LangVersion>
         <PackageVersion>0.0.5</PackageVersion>
         <PackageId>BaseViewModel</PackageId>

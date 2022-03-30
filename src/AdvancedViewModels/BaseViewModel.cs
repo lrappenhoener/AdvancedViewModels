@@ -2,7 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel;
+namespace PCC.Libraries.AdvancedViewModels;
 
 public abstract class BaseViewModel : IComplexProperty
 {

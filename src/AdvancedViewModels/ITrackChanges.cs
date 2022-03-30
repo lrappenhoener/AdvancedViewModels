@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel;
+namespace PCC.Libraries.AdvancedViewModels;
 
 public interface ITrackChanges : INotifyPropertyChanged
 {

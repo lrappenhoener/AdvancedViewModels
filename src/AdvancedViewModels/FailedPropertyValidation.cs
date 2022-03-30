@@ -1,4 +1,4 @@
-namespace PCC.Datastructures.CSharp.BaseViewModel;
+namespace PCC.Libraries.AdvancedViewModels;
 
 public class FailedPropertyValidation
 {

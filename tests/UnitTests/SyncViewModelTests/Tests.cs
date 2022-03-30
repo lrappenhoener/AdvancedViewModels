@@ -1,12 +1,12 @@
 using FluentAssertions;
-using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
+using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.SyncWpfFormTests;
+namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncViewModelTests;
 
 public abstract class Tests
 {
-    protected abstract SampleBaseSyncViewModel CreateSut(SampleBackingObject wrappedObject);
+    protected abstract SampleViewModel CreateSut(SampleBackingObject wrappedObject);
     protected abstract SampleBackingObject CreateWrappedObject();
 
     #region Set
@@ -59,7 +59,7 @@ public abstract class Tests
         var childWrappedObject = CreateWrappedObject();
         var wrappedObject = CreateWrappedObject();
         var sut = CreateSut(wrappedObject);
-        sut.SomeComplex = new SampleBaseSyncViewModel(childWrappedObject, 0);
+        sut.SomeComplex = new SampleViewModel(childWrappedObject, 0);
         var expected = sut.SomeComplex.SomeInteger + 1;
 
         sut.SomeComplex.SomeInteger++;

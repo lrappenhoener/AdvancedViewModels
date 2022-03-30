@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-<RootNamespace>PCC.Datastructures.CSharp.BaseViewModel.UnitTests</RootNamespace>
+<RootNamespace>PCC.Libraries.AdvancedViewModels.UnitTests</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
 
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\BaseViewModel\BaseViewModel.csproj" />
+    <ProjectReference Include="..\..\src\AdvancedViewModels\AdvancedViewModels.csproj" />
   </ItemGroup>
 
 </Project>

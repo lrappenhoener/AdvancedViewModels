@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
+using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.ISyncComplexCollectionTests;
+namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
 
 public abstract class Tests
 {
-    protected abstract ISyncComplexCollection<SampleBaseSyncViewModel> CreateSut();
-    protected abstract ISyncComplexCollection<SampleBaseSyncViewModel> CreateSut(List<SampleBaseSyncViewModel> elements);
-    protected abstract SampleBaseSyncViewModel CreateElement();
-    protected abstract List<SampleBaseSyncViewModel> CreateElements(int count);
+    protected abstract ISyncComplexCollection<SampleViewModel> CreateSut();
+    protected abstract ISyncComplexCollection<SampleViewModel> CreateSut(List<SampleViewModel> elements);
+    protected abstract SampleViewModel CreateElement();
+    protected abstract List<SampleViewModel> CreateElements(int count);
 
     [Fact]
     public void NotDirty_Initially()
@@ -417,7 +417,7 @@ public abstract class Tests
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         Add_Insert_Replace_Remove_Elements(sut);
-        var expectedElements = new List<SampleBaseSyncViewModel>(sut); 
+        var expectedElements = new List<SampleViewModel>(sut); 
         
         sut.AcceptChanges();
         sut.RejectChanges();
@@ -579,7 +579,7 @@ public abstract class Tests
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var mutated = new List<SampleBaseSyncViewModel>
+        var mutated = new List<SampleViewModel>
             {elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9)};
         foreach (var element in mutated)
             element.SomeInteger++;
@@ -594,7 +594,7 @@ public abstract class Tests
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var mutated = new List<SampleBaseSyncViewModel>
+        var mutated = new List<SampleViewModel>
             {elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9)};
         foreach (var element in mutated)
             element.SomeInteger++;
@@ -604,7 +604,7 @@ public abstract class Tests
         mutated.All(e => !e.IsDirty).Should().BeTrue();
     }
     
-    private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleBaseSyncViewModel> sut)
+    private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
         sut[3] = CreateElement();
         sut.Add(CreateElement());

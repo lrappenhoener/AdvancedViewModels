@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 
-namespace PCC.Datastructures.CSharp.BaseViewModel.UnitTests.Common;
+namespace PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 
-public class SampleBaseSyncViewModel : BaseViewModel
+public class SampleViewModel : BaseViewModel
 {
-    public SampleBaseSyncViewModel(SampleBackingObject wrapped, int depth) : base(wrapped)
+    public SampleViewModel(SampleBackingObject wrapped, int depth) : base(wrapped)
     {
         if (depth > 2) return;
-        SomeComplex = new SampleBaseSyncViewModel(wrapped.SomeComplex, depth + 1);
+        SomeComplex = new SampleViewModel(wrapped.SomeComplex, depth + 1);
     }
     
-    public SampleBaseSyncViewModel(int depth)
+    public SampleViewModel(int depth)
     {
         if (depth > 2) return;
-        SomeComplex = new SampleBaseSyncViewModel(depth + 1);
+        SomeComplex = new SampleViewModel(depth + 1);
     }
 
     public int SomeInteger
@@ -35,21 +35,21 @@ public class SampleBaseSyncViewModel : BaseViewModel
     }
     
     #nullable disable
-    public SampleBaseSyncViewModel SomeComplex
+    public SampleViewModel SomeComplex
     {
-        get => GetComplexProperty<SampleBaseSyncViewModel>();
+        get => GetComplexProperty<SampleViewModel>();
         set => SetComplexProperty(value);
     }
     
-    public SampleBaseSyncViewModel NullComplex
+    public SampleViewModel NullComplex
     {
-        get => GetComplexProperty<SampleBaseSyncViewModel>();
+        get => GetComplexProperty<SampleViewModel>();
         set => SetComplexProperty(value);
     }
 
-    public SyncComplexCollection<SampleBaseSyncViewModel> ComplexCollection 
+    public SyncComplexCollection<SampleViewModel> ComplexCollection 
     {
-        get => GetComplexProperty<SyncComplexCollection<SampleBaseSyncViewModel>>();
+        get => GetComplexProperty<SyncComplexCollection<SampleViewModel>>();
         set => SetComplexProperty(value);
     }
 
