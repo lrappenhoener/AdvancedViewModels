@@ -69,7 +69,10 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     private void Hook(IEnumerable<IComplexProperty> complexProperties)
     {
         foreach (var complexProperty in complexProperties)
+        {
             complexProperty.PropertyChanged += OnElementPropertyChanged;
+            complexProperty.ErrorsChanged += OnElementErrorsChanged;
+        }
     }
 
     private void OnPropertyChanged(string propertyName)
