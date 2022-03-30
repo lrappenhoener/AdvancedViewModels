@@ -7,7 +7,7 @@
         <RootNamespace>PCC.Libraries.AdvancedViewModels</RootNamespace>
         <LangVersion>10</LangVersion>
         <PackageVersion>0.0.5</PackageVersion>
-        <PackageId>BaseViewModel</PackageId>
+        <PackageId>AdvancedViewModels</PackageId>
         <Authors>lr</Authors>
         <Company>pcc</Company>
     </PropertyGroup>
