@@ -603,6 +603,15 @@ public abstract class Tests
 
         mutated.All(e => !e.IsDirty).Should().BeTrue();
     }
+
+    [Fact]
+    public void HasErrors_False_When_Elements_Have_No_Errors()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+
+        sut.HasErrors.Should().BeFalse();
+    }
     
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
