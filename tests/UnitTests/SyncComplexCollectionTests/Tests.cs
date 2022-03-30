@@ -675,6 +675,18 @@ public abstract class Tests
         sut.CanSave.Should().BeFalse();
     }
     
+    [Fact]
+    public void CanSave_When_Added_Element_True()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        
+        sut.Add(element);
+        
+        sut.CanSave.Should().BeTrue();
+    }
+    
     private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
     {
         sut[3] = CreateElement();
