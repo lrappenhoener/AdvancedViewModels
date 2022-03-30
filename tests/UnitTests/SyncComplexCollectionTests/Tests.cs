@@ -637,6 +637,21 @@ public abstract class Tests
     }
     
     [Fact]
+    public void ErrorsChanged_Fires_When_New_Added_Element_Gets_Errors()
+    {
+        var elements = CreateElements(10);
+        var sut = CreateSut(elements);
+        var element = CreateElement();
+        var invoked = false;
+        sut.ErrorsChanged += (o, e) => invoked = true;
+        sut.Add(element);
+        
+        element.SomeInteger = -42;
+
+        invoked.Should().BeTrue();
+    }
+    
+    [Fact]
     public void ErrorsChanged_Not_Fires_When_Removed_Element_Gets_Errors()
     {
         var elements = CreateElements(10);
