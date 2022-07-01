@@ -15,4 +15,14 @@ public class SampleWrapperTests
 
         wrapper.Model.Should().Be(model);
     }
+    
+    [Fact]
+    public void Base_Of_Type_BaseViewModel()
+    {
+        var model = new SampleWrapper();
+        
+        var wrapper = new Wrapper<SampleWrapper>(model);
+
+        wrapper.GetType().BaseType.Should().Be(typeof(BaseViewModel));
+    }
 }
