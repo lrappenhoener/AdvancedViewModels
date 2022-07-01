@@ -1,8 +1,8 @@
 namespace PCC.Libraries.AdvancedViewModels;
 
-public class Wrapper<TModel> : BaseViewModel
+public abstract class Wrapper<TModel> : BaseViewModel
 {
-    public Wrapper(TModel model)
+    protected Wrapper(TModel model) : base(model)
     {
         Model = model;
     }
