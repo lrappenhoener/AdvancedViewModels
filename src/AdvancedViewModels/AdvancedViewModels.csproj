@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <RootNamespace>PCC.Libraries.AdvancedViewModels</RootNamespace>
         <LangVersion>10</LangVersion>
-        <PackageVersion>0.0.7</PackageVersion>
+        <PackageVersion>0.0.8</PackageVersion>
         <PackageId>AdvancedViewModels</PackageId>
         <Authors>lr</Authors>
         <Company>pcc</Company>
