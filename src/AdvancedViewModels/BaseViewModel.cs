@@ -103,7 +103,7 @@ public abstract class BaseViewModel : IComplexProperty
         return _complexProperties.GetProperty<T>(propertyName);        
     }
     
-    private void FirePropertyChanged(string propertyName)
+    public void FirePropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));
