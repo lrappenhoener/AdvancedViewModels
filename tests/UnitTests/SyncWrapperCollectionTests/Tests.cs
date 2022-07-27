@@ -4,21 +4,23 @@ using FluentAssertions;
 using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
+namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncWrapperCollectionTests;
 
 public abstract class Tests
 {
-    protected abstract ISyncComplexCollection<SampleViewModel> CreateSut();
-    protected abstract ISyncComplexCollection<SampleViewModel> CreateSut(List<SampleViewModel> wrappers);
+    protected abstract ISyncComplexCollection<WrapperSampleBackingObject> CreateSut();
 
-    protected virtual SampleViewModel CreateElement()
+    protected abstract ISyncComplexCollection<WrapperSampleBackingObject> CreateSut(
+        List<WrapperSampleBackingObject> wrappers);
+
+    protected virtual WrapperSampleBackingObject CreateElement()
     {
-        return new SampleViewModel(new SampleBackingObject(0), 0);
+        return new WrapperSampleBackingObject(new SampleBackingObject(0), 1);
     }
 
-    protected virtual List<SampleViewModel> CreateElements(int count)
+    protected virtual List<WrapperSampleBackingObject> CreateElements(int count)
     {
-        var elements = new List<SampleViewModel>();
+        var elements = new List<WrapperSampleBackingObject>();
         for (var i = 0; i < count; i++) elements.Add(CreateElement());
 
         return elements;
@@ -428,7 +430,7 @@ public abstract class Tests
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         Add_Insert_Replace_Remove_Elements(sut);
-        var expectedElements = new List<SampleViewModel>(sut);
+        var expectedElements = new List<WrapperSampleBackingObject>(sut);
 
         sut.AcceptChanges();
         sut.RejectChanges();
@@ -588,7 +590,7 @@ public abstract class Tests
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var mutated = new List<SampleViewModel>
+        var mutated = new List<WrapperSampleBackingObject>
             { elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9) };
         foreach (var element in mutated)
             element.SomeInteger++;
@@ -603,7 +605,7 @@ public abstract class Tests
     {
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
-        var mutated = new List<SampleViewModel>
+        var mutated = new List<WrapperSampleBackingObject>
             { elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9) };
         foreach (var element in mutated)
             element.SomeInteger++;
@@ -753,7 +755,7 @@ public abstract class Tests
         sut.CanSave.Should().BeFalse();
     }
 
-    private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<SampleViewModel> sut)
+    private void Add_Insert_Replace_Remove_Elements(ISyncComplexCollection<WrapperSampleBackingObject> sut)
     {
         sut[3] = CreateElement();
         sut.Add(CreateElement());

@@ -10,24 +10,8 @@ public class SyncComplexCollectionTests : Tests
         return new SyncComplexCollection<SampleViewModel>();
     }
 
-    protected override SyncComplexCollection<SampleViewModel> CreateSut(List<SampleViewModel> elements)
+    protected override SyncComplexCollection<SampleViewModel> CreateSut(List<SampleViewModel> wrappers)
     {
-        return new SyncComplexCollection<SampleViewModel>(elements);
-    }
-
-    protected override SampleViewModel CreateElement()
-    {
-        return new SampleViewModel(new SampleBackingObject(0), 0);
-    }
-
-    protected override List<SampleViewModel> CreateElements(int count)
-    {
-        var elements = new List<SampleViewModel>();
-        for (int i = 0; i < count; i++)
-        {
-            elements.Add(CreateElement());
-        }
-
-        return elements;
+        return new SyncComplexCollection<SampleViewModel>(wrappers);
     }
 }

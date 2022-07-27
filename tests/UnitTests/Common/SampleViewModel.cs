@@ -9,7 +9,7 @@ public class SampleViewModel : BaseViewModel
         if (depth > 2) return;
         SomeComplex = new SampleViewModel(wrapped.SomeComplex, depth + 1);
     }
-    
+
     public SampleViewModel(int depth)
     {
         if (depth > 2) return;
@@ -22,7 +22,7 @@ public class SampleViewModel : BaseViewModel
         set => SetProperty(value);
     }
 
-    public int UninitializedInteger 
+    public int UninitializedInteger
     {
         get => GetProperty<int>();
         set => SetProperty(value);
@@ -33,21 +33,20 @@ public class SampleViewModel : BaseViewModel
         get => GetProperty<object>();
         set => SetProperty(value);
     }
-    
-    #nullable disable
+#nullable disable
     public SampleViewModel SomeComplex
     {
         get => GetComplexProperty<SampleViewModel>();
         set => SetComplexProperty(value);
     }
-    
+
     public SampleViewModel NullComplex
     {
         get => GetComplexProperty<SampleViewModel>();
         set => SetComplexProperty(value);
     }
 
-    public SyncComplexCollection<SampleViewModel> ComplexCollection 
+    public SyncComplexCollection<SampleViewModel> ComplexCollection
     {
         get => GetComplexProperty<SyncComplexCollection<SampleViewModel>>();
         set => SetComplexProperty(value);
@@ -59,13 +58,13 @@ public class SampleViewModel : BaseViewModel
     {
         ValidationCalled = true;
         var results = new List<FailedPropertyValidation>();
-        
+
         if (SomeInteger < 0)
             results.Add(new FailedPropertyValidation(nameof(SomeInteger), new List<string>
             {
                 "SomeInteger < 0"
             }));
-        
+
         return results;
     }
 }
