@@ -45,8 +45,20 @@ public abstract class BaseViewModel : IComplexProperty
     
     public void AcceptChanges()
     {
+        PreAcceptChanges();
         _complexProperties.AcceptChanges();
         _simpleProperties.AcceptChanges();
+        PostAcceptChanges();
+    }
+
+    protected virtual void PreAcceptChanges()
+    {
+        
+    }
+    
+    protected virtual void PostAcceptChanges()
+    {
+        
     }
 
     public void RejectChanges()
