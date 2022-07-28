@@ -589,4 +589,21 @@ public abstract class Tests
     }
 
     #endregion
+
+    #region Post(Reject) Accept(Reject)Changes
+
+    [Fact]
+    public void AcceptChanges_Successful_Invokes_PreAcceptChanges_Before_PostAcceptChanges()
+    {
+        var sut = CreateSut();
+        sut.SomeInteger++;
+        
+        sut.AcceptChanges();
+
+        sut.PreAcceptChangesInvoked.Should().BeTrue();
+        sut.PostAcceptChangesInvoked.Should().BeTrue();
+        sut.PostAcceptChangesInvokedAt.Should().BeAfter(sut.PreAcceptChangesInvokedAt);
+    }
+
+    #endregion
 }
