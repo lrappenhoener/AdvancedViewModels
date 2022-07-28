@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace PCC.Libraries.AdvancedViewModels.UnitTests.Common;
@@ -19,30 +20,35 @@ public class SampleViewModel : BaseViewModel
     protected override void PostAcceptChanges()
     {
         PostAcceptChangesInvoked = true;
+        PostAcceptChangesInvokedAt = DateTime.Now;
     }
 
     public bool PostAcceptChangesInvoked { get; set; }
-
+    public DateTime PostAcceptChangesInvokedAt { get; set; }
+    public DateTime PreAcceptChangesInvokedAt { get; set; }
+    public bool PreAcceptChangesInvoked { get; set; }
+    public DateTime PostRejectChangesInvokedAt { get; set; }
+    public bool PostRejectChangesInvoked { get; set; }
+    public DateTime PreRejectChangesInvokedAt { get; set; }
+    public bool PreRejectChangesInvoked { get; set; }
+    
     protected override void PreAcceptChanges()
     {
         PreAcceptChangesInvoked = true;
+        PreAcceptChangesInvokedAt = DateTime.Now;
     }
-
-    public bool PreAcceptChangesInvoked { get; set; }
 
     protected override void PostRejectChanges()
     {
         PostRejectChangesInvoked = true;
+        PostRejectChangesInvokedAt = DateTime.Now;
     }
-
-    public bool PostRejectChangesInvoked { get; set; }
 
     protected override void PreRejectChanges()
     {
         PreRejectChangesInvoked = true;
+        PreRejectChangesInvokedAt = DateTime.Now;
     }
-    
-    public bool PreRejectChangesInvoked { get; set; }
 
     public int SomeInteger
     {
