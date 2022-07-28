@@ -6,20 +6,20 @@
         <Nullable>enable</Nullable>
         <RootNamespace>PCC.Libraries.AdvancedViewModels</RootNamespace>
         <LangVersion>10</LangVersion>
-        <PackageVersion>0.1.1</PackageVersion>
+        <PackageVersion>0.1.2</PackageVersion>
         <PackageId>AdvancedViewModels</PackageId>
         <Authors>lr</Authors>
         <Company>pcc</Company>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\..\..\build\debug</OutputPath>
-      <PackageOutputPath>g:\Packages\Private\/</PackageOutputPath>
+        <OutputPath>..\..\..\build\debug</OutputPath>
+        <PackageOutputPath>g:\Packages\Private\/</PackageOutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\..\..\build\release</OutputPath>
-      <PackageOutputPath>g:\Packages\Private\</PackageOutputPath>
-      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <OutputPath>..\..\..\build\release</OutputPath>
+        <PackageOutputPath>g:\Packages\Private\</PackageOutputPath>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 </Project>
