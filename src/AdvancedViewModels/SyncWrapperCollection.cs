@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace PCC.Libraries.AdvancedViewModels;
 
-public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TWrapper> where TWrapper : Wrapper<TModel>
+public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TWrapper> where TWrapper : IComplexProperty<TModel>
 {
     private readonly List<TModel> _models;
     private readonly ISyncComplexCollection<TWrapper> _syncComplexCollection;
@@ -13,7 +13,6 @@ public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TW
     {
         _models = models;
         _syncComplexCollection = new SyncComplexCollection<TWrapper>(wrappers);
-        _syncComplexCollection.CollectionChanged += OnCollectionChanged;
     }
 
     #region ISyncComplexCollection<TWrapper> Members
@@ -125,9 +124,5 @@ public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TW
     {
         _models.Clear();
         _models.AddRange(_syncComplexCollection.Select(w => w.Model).ToList());
-    }
-
-    private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
     }
 }
