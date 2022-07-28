@@ -16,6 +16,34 @@ public class SampleViewModel : BaseViewModel
         SomeComplex = new SampleViewModel(depth + 1);
     }
 
+    protected override void PostAcceptChanges()
+    {
+        PostAcceptChangesInvoked = true;
+    }
+
+    public bool PostAcceptChangesInvoked { get; set; }
+
+    protected override void PreAcceptChanges()
+    {
+        PreAcceptChangesInvoked = true;
+    }
+
+    public bool PreAcceptChangesInvoked { get; set; }
+
+    protected override void PostRejectChanges()
+    {
+        PostRejectChangesInvoked = true;
+    }
+
+    public bool PostRejectChangesInvoked { get; set; }
+
+    protected override void PreRejectChanges()
+    {
+        PreRejectChangesInvoked = true;
+    }
+    
+    public bool PreRejectChangesInvoked { get; set; }
+
     public int SomeInteger
     {
         get => GetProperty<int>();
