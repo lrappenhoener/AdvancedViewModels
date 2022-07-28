@@ -63,8 +63,20 @@ public abstract class BaseViewModel : IComplexProperty
 
     public void RejectChanges()
     {
+        PreRejectChanges();
         _complexProperties.RejectChanges();
         _simpleProperties.RejectChanges();
+        PostRejectChanges();
+    }
+    
+    protected virtual void PreRejectChanges()
+    {
+        
+    }
+    
+    protected virtual void PostRejectChanges()
+    {
+        
     }
     
     protected void SetProperty(object value, [CallerMemberName] string propertyName = "")
