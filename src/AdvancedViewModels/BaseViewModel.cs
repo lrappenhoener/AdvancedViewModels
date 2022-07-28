@@ -8,8 +8,7 @@ public abstract class BaseViewModel : IComplexProperty
 {
     private readonly SimpleProperties _simpleProperties;
     private readonly ComplexProperties _complexProperties;
-    private readonly Dictionary<string, IEnumerable<string>> _errors =
-        new Dictionary<string, IEnumerable<string>>();
+    private readonly Dictionary<string, IEnumerable<string>> _errors = new();
 
     protected BaseViewModel(object store) : this(new ReflectionSimpleProperties(store))
     {
@@ -29,7 +28,8 @@ public abstract class BaseViewModel : IComplexProperty
         Validate();
     }
 
-    private void OnComplexErrorsChanged(string propertyName, object property, Dictionary<string, IEnumerable<string>> errors)
+    private void OnComplexErrorsChanged(string propertyName, object property,
+        Dictionary<string, IEnumerable<string>> errors)
     {
         FireErrorChanged(propertyName);
     }
@@ -42,7 +42,7 @@ public abstract class BaseViewModel : IComplexProperty
     public event PropertyChangedEventHandler? PropertyChanged;
     public bool IsDirty => _simpleProperties.IsDirty || _complexProperties.IsDirty;
     public bool CanSave => IsDirty && !HasErrors;
-    
+
     public void AcceptChanges()
     {
         PreAcceptChanges();
@@ -53,12 +53,10 @@ public abstract class BaseViewModel : IComplexProperty
 
     protected virtual void PreAcceptChanges()
     {
-        
     }
-    
+
     protected virtual void PostAcceptChanges()
     {
-        
     }
 
     public void RejectChanges()
@@ -68,17 +66,15 @@ public abstract class BaseViewModel : IComplexProperty
         _simpleProperties.RejectChanges();
         PostRejectChanges();
     }
-    
+
     protected virtual void PreRejectChanges()
     {
-        
     }
-    
+
     protected virtual void PostRejectChanges()
     {
-        
     }
-    
+
     protected void SetProperty(object value, [CallerMemberName] string propertyName = "")
     {
         _simpleProperties.SetProperty(propertyName, value);
@@ -91,19 +87,16 @@ public abstract class BaseViewModel : IComplexProperty
         var fixedErrors = _errors.Where(e => results.All(ee => ee.PropertyName != e.Key)).ToList();
         var newErrors = results.Where(e => _errors.All(ee => ee.Key != e.PropertyName)).ToList();
         var fireHasErrorsPropertyChanged = fixedErrors.Any() || newErrors.Any();
-        
+
         _errors.Clear();
-        
+
         foreach (var newError in newErrors)
         {
             _errors.Add(newError.PropertyName, newError.Errors);
             FireErrorChanged(newError.PropertyName);
         }
 
-        foreach (var fixedError in fixedErrors)
-        {
-            FireErrorChanged(fixedError.Key);
-        }
+        foreach (var fixedError in fixedErrors) FireErrorChanged(fixedError.Key);
 
         if (fireHasErrorsPropertyChanged)
         {
@@ -119,20 +112,20 @@ public abstract class BaseViewModel : IComplexProperty
 
     protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = "")
     {
-        _complexProperties.SetProperty(propertyName, complexProperty);        
+        _complexProperties.SetProperty(propertyName, complexProperty);
     }
 
     protected T? GetComplexProperty<T>([CallerMemberName] string propertyName = "")
     {
-        return _complexProperties.GetProperty<T>(propertyName);        
+        return _complexProperties.GetProperty<T>(propertyName);
     }
-    
+
     public void FirePropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDirty)));
     }
-    
+
     private void FireErrorChanged(string propertyName)
     {
         ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
@@ -142,10 +135,10 @@ public abstract class BaseViewModel : IComplexProperty
     {
         if (!_errors.ContainsKey(propertyName))
             return new List<string>();
-        
+
         return _errors[propertyName];
     }
-    
+
     public bool HasErrors => _errors.Any() || _complexProperties.HasErrors;
     public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 

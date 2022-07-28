@@ -589,7 +589,7 @@ public abstract class Tests
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var mutated = new List<SampleViewModel>
-            { elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9) };
+            {elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9)};
         foreach (var element in mutated)
             element.SomeInteger++;
 
@@ -604,7 +604,7 @@ public abstract class Tests
         var elements = CreateElements(10);
         var sut = CreateSut(elements);
         var mutated = new List<SampleViewModel>
-            { elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9) };
+            {elements.ElementAt(0), elements.ElementAt(4), elements.ElementAt(9)};
         foreach (var element in mutated)
             element.SomeInteger++;
 

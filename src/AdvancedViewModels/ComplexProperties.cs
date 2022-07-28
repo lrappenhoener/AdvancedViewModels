@@ -5,14 +5,13 @@ namespace PCC.Libraries.AdvancedViewModels;
 internal class ComplexProperties : ITrackChanges
 {
     private readonly Dictionary<string, ComplexPropertyRegistration>
-        _complexPropertyRegistrations =
-            new Dictionary<string, ComplexPropertyRegistration>();
+        _complexPropertyRegistrations = new();
 
-    private readonly Dictionary<string, Dictionary<string, IEnumerable<string>>> _errors = new Dictionary<string, Dictionary<string, IEnumerable<string>> >();
+    private readonly Dictionary<string, Dictionary<string, IEnumerable<string>>> _errors = new();
 
     public event PropertyChangedEventHandler? PropertyChanged;
     public event Action<string, object, Dictionary<string, IEnumerable<string>>>? ErrorsChanged;
-    
+
     public bool IsDirty => _complexPropertyRegistrations.Any(cpr => cpr.Value.Target.IsDirty);
     public bool HasErrors => _errors.Any();
 
@@ -27,19 +26,16 @@ internal class ComplexProperties : ITrackChanges
     public T? GetProperty<T>(string propertyName)
     {
         if (!_complexPropertyRegistrations.ContainsKey(propertyName))
-            return default(T);
+            return default;
         var registration = _complexPropertyRegistrations[propertyName];
-        return (T)registration.Target;
+        return (T) registration.Target;
     }
-    
+
     public void AcceptChanges()
     {
         var dirtyComplexProperties = _complexPropertyRegistrations.Where(cpr => cpr.Value.Target.IsDirty)
             .Select(cpr => cpr.Value.Target);
-        foreach (var dirtyComplexProperty in dirtyComplexProperties)
-        {
-            dirtyComplexProperty.AcceptChanges();
-        }
+        foreach (var dirtyComplexProperty in dirtyComplexProperties) dirtyComplexProperty.AcceptChanges();
     }
 
     public void RejectChanges()
@@ -52,12 +48,13 @@ internal class ComplexProperties : ITrackChanges
             FirePropertyChanged(dirtyComplexProperty.Item1);
         }
     }
-    
+
     private void RegisterComplexProperty(string complexPropertyName, IComplexProperty complexProperty)
     {
-        var propertyChangedHandler = new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
+        var propertyChangedHandler =
+            new PropertyChangedEventHandler((_, _) => FirePropertyChanged(complexPropertyName));
         complexProperty.PropertyChanged += propertyChangedHandler;
-        
+
         var errorsChangedHandler =
             new EventHandler<DataErrorsChangedEventArgs>((o, e) =>
             {
@@ -66,15 +63,16 @@ internal class ComplexProperties : ITrackChanges
                 OnErrorsChanged(complexPropertyName, sender, propertyName);
             });
         complexProperty.ErrorsChanged += errorsChangedHandler;
-        
+
         _complexPropertyRegistrations.Add(complexPropertyName,
-            new ComplexPropertyRegistration(complexPropertyName, propertyChangedHandler, errorsChangedHandler, complexProperty));
+            new ComplexPropertyRegistration(complexPropertyName, propertyChangedHandler, errorsChangedHandler,
+                complexProperty));
     }
 
     private void OnErrorsChanged(string complexPropertyName, IComplexProperty complexProperty, string propertyName)
     {
-        var errors = (IEnumerable<string>)complexProperty.GetErrors(propertyName);
-        
+        var errors = (IEnumerable<string>) complexProperty.GetErrors(propertyName);
+
         if (!_errors.ContainsKey(complexPropertyName))
             _errors.Add(complexPropertyName, new Dictionary<string, IEnumerable<string>>());
 
@@ -83,7 +81,7 @@ internal class ComplexProperties : ITrackChanges
             complexPropertyErrors.Remove(propertyName);
 
         complexPropertyErrors.Add(propertyName, errors);
-        
+
         ErrorsChanged?.Invoke(complexPropertyName, complexProperty, complexPropertyErrors);
     }
 
@@ -94,7 +92,7 @@ internal class ComplexProperties : ITrackChanges
         registration.Target.ErrorsChanged -= registration.ErrorsChangedHandler;
         _complexPropertyRegistrations.Remove(complexPropertyName);
     }
-    
+
     private bool RegistrationExists(string propertyName)
     {
         return _complexPropertyRegistrations.ContainsKey(propertyName);

@@ -8,12 +8,12 @@ namespace PCC.Libraries.AdvancedViewModels;
 public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : IComplexProperty
 {
     private List<T> _confirmedElements;
-    private ObservableCollection<T> _currentElements = new ObservableCollection<T>();
+    private ObservableCollection<T> _currentElements = new();
 
     public SyncComplexCollection() : this(new List<T>())
     {
-        
     }
+
     public SyncComplexCollection(List<T> source)
     {
         _confirmedElements = new List<T>(source);
@@ -34,7 +34,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     private void OnElementErrorsChanged(object sender, DataErrorsChangedEventArgs e)
     {
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(""));        
+        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(""));
     }
 
     private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -52,7 +52,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
         var newComplexProperties =
             e.NewItems != null ? e.NewItems.OfType<IComplexProperty>() : new List<IComplexProperty>();
         Hook(newComplexProperties);
-        
+
         CollectionChanged?.Invoke(this, e);
         OnPropertyChanged(nameof(IsDirty));
         OnPropertyChanged(nameof(CanSave));
@@ -66,7 +66,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
             complexProperty.ErrorsChanged -= OnElementErrorsChanged;
         }
     }
-    
+
     private void Hook(IEnumerable<IComplexProperty> complexProperties)
     {
         foreach (var complexProperty in complexProperties)
@@ -79,19 +79,23 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
     private void OnPropertyChanged(string propertyName)
     {
         var args = new PropertyChangedEventArgs(propertyName);
-        PropertyChanged?.Invoke(this, args);        
+        PropertyChanged?.Invoke(this, args);
     }
 
     public event NotifyCollectionChangedEventHandler? CollectionChanged;
     public event PropertyChangedEventHandler? PropertyChanged;
-    public bool IsDirty { get
+
+    public bool IsDirty
     {
-        if (_currentElements.Count != _confirmedElements.Count()) return true;
-        for (int i = 0; i < _currentElements.Count; i++)
-            if (!ReferenceEquals(_currentElements[i], _confirmedElements[i]) || _currentElements[i].IsDirty) 
-                return true;
-        return false;
-    }}
+        get
+        {
+            if (_currentElements.Count != _confirmedElements.Count()) return true;
+            for (var i = 0; i < _currentElements.Count; i++)
+                if (!ReferenceEquals(_currentElements[i], _confirmedElements[i]) || _currentElements[i].IsDirty)
+                    return true;
+            return false;
+        }
+    }
 
     public bool CanSave => IsDirty && !HasErrors;
 
@@ -149,6 +153,7 @@ public class SyncComplexCollection<T> : ISyncComplexCollection<T> where T : ICom
 
     public int Count => _currentElements.Count;
     public bool IsReadOnly => false;
+
     public int IndexOf(T item)
     {
         return _currentElements.IndexOf(item);

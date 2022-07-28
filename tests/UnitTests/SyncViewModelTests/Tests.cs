@@ -39,7 +39,7 @@ public abstract class Tests
 
         wrappedObject.SomeInteger.Should().Be(expected);
     }
-    
+
     [Fact]
     public void Accepted_Changed_Reference_Property_Successful_Updates_Wrapped_Object()
     {
@@ -52,7 +52,7 @@ public abstract class Tests
 
         wrappedObject.SomeReference.Should().Be(expected);
     }
-    
+
     [Fact]
     public void Accepted_Changed_Complex_Property_Successful_Updates_Wrapped_Object()
     {

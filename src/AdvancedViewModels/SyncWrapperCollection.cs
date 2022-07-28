@@ -4,7 +4,8 @@ using System.ComponentModel;
 
 namespace PCC.Libraries.AdvancedViewModels;
 
-public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TWrapper> where TWrapper : IComplexProperty<TModel>
+public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TWrapper>
+    where TWrapper : IComplexProperty<TModel>
 {
     private readonly List<TModel> _models;
     private readonly ISyncComplexCollection<TWrapper> _syncComplexCollection;

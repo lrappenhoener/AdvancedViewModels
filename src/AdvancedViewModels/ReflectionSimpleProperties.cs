@@ -6,7 +6,7 @@ public class ReflectionSimpleProperties : SimpleProperties
 {
     private readonly object _store;
     private readonly Type _storeType;
-    private readonly Dictionary<string, PropertyInfo> _propertyInfos = new Dictionary<string, PropertyInfo>();
+    private readonly Dictionary<string, PropertyInfo> _propertyInfos = new();
 
     public ReflectionSimpleProperties(object store)
     {
@@ -20,14 +20,12 @@ public class ReflectionSimpleProperties : SimpleProperties
         _propertyInfos[propertyName].SetValue(_store, value);
     }
 
-    #nullable disable
+#nullable disable
     protected override T GetPropertyImplementation<T>(string propertyName)
     {
         RefreshPropertyInfo(propertyName);
         var value = _propertyInfos[propertyName].GetValue(_store);
-        return value != null ? 
-            (T)value : 
-            default(T);
+        return value != null ? (T) value : default;
     }
 
     private void RefreshPropertyInfo(string propertyName)

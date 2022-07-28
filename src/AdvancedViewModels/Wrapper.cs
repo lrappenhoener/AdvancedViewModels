@@ -6,5 +6,6 @@ public abstract class Wrapper<TModel> : BaseViewModel, IComplexProperty<TModel>
     {
         Model = model;
     }
+
     public TModel Model { get; }
 }

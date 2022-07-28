@@ -31,7 +31,7 @@ public class SampleViewModel : BaseViewModel
     public bool PostRejectChangesInvoked { get; set; }
     public DateTime PreRejectChangesInvokedAt { get; set; }
     public bool PreRejectChangesInvoked { get; set; }
-    
+
     protected override void PreAcceptChanges()
     {
         PreAcceptChangesInvoked = true;
