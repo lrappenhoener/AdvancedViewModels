@@ -604,6 +604,19 @@ public abstract class Tests
         sut.PostAcceptChangesInvoked.Should().BeTrue();
         sut.PostAcceptChangesInvokedAt.Should().BeAfter(sut.PreAcceptChangesInvokedAt);
     }
+    
+    [Fact]
+    public void RejectChanges_Successful_Invokes_PreRejectChanges_Before_PostRejectChanges()
+    {
+        var sut = CreateSut();
+        sut.SomeInteger++;
+        
+        sut.RejectChanges();
+
+        sut.PreRejectChangesInvoked.Should().BeTrue();
+        sut.PostRejectChangesInvoked.Should().BeTrue();
+        sut.PostRejectChangesInvokedAt.Should().BeAfter(sut.PreRejectChangesInvokedAt);
+    }
 
     #endregion
 }
