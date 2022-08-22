@@ -1,4 +1,4 @@
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.Common;
+namespace AdvancedViewModels.UnitTests.Common;
 #nullable disable
 
 public class SampleBackingObject

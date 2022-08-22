@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
+using AdvancedViewModels.UnitTests.Common;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
+namespace AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
 
 public class SyncComplexCollectionTests : Tests
 {

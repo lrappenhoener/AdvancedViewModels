@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace PCC.Libraries.AdvancedViewModels;
+namespace AdvancedViewModels;
 
 public abstract class SimpleProperties
 {

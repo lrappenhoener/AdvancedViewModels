@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AdvancedViewModels.UnitTests.Common;
 using FluentAssertions;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncWrapperCollectionTests;
+namespace AdvancedViewModels.UnitTests.SyncWrapperCollectionTests;
 
 public class SyncWrapperCollectionTests : Tests
 {
@@ -152,19 +152,19 @@ public class WrapperSampleBackingObject : Wrapper<SampleBackingObject>
         set => SetProperty(value);
     }
 
-    public WrapperSampleBackingObject SomeComplex
+    public WrapperSampleBackingObject? SomeComplex
     {
         get => GetComplexProperty<WrapperSampleBackingObject>();
         set => SetComplexProperty(value);
     }
 
-    public WrapperSampleBackingObject NullComplex
+    public WrapperSampleBackingObject? NullComplex
     {
         get => GetComplexProperty<WrapperSampleBackingObject>();
         set => SetComplexProperty(value);
     }
 
-    public SyncComplexCollection<WrapperSampleBackingObject> ComplexCollection
+    public SyncComplexCollection<WrapperSampleBackingObject>? ComplexCollection
     {
         get => GetComplexProperty<SyncComplexCollection<WrapperSampleBackingObject>>();
         set => SetComplexProperty(value);

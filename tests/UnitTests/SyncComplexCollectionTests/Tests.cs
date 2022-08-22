@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using AdvancedViewModels.UnitTests.Common;
 using FluentAssertions;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
+namespace AdvancedViewModels.UnitTests.SyncComplexCollectionTests;
 
 public abstract class Tests
 {

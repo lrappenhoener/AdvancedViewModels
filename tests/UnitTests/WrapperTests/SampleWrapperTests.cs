@@ -1,6 +1,6 @@
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
+using AdvancedViewModels.UnitTests.Common;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.WrapperTests;
+namespace AdvancedViewModels.UnitTests.WrapperTests;
 
 public class SampleWrapperTests : Tests
 {

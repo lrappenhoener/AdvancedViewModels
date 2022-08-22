@@ -1,6 +1,6 @@
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
+using AdvancedViewModels.UnitTests.Common;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.ViewModelTests;
+namespace AdvancedViewModels.UnitTests.ViewModelTests;
 
 public class SampleViewModelTests : Tests
 {

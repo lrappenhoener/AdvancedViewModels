@@ -1,4 +1,4 @@
-namespace PCC.Libraries.AdvancedViewModels;
+namespace AdvancedViewModels;
 
 public class FailedPropertyValidation
 {

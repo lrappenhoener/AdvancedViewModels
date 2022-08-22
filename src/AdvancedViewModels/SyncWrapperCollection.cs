@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace PCC.Libraries.AdvancedViewModels;
+namespace AdvancedViewModels;
 
 public class SyncWrapperCollection<TWrapper, TModel> : ISyncComplexCollection<TWrapper>
     where TWrapper : IComplexProperty<TModel>

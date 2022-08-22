@@ -1,8 +1,8 @@
+using AdvancedViewModels.UnitTests.Common;
 using FluentAssertions;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.WrapperTests;
+namespace AdvancedViewModels.UnitTests.WrapperTests;
 
 public abstract class Tests
 {

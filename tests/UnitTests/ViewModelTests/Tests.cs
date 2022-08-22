@@ -1,9 +1,8 @@
-using System.Collections.Generic;
+using AdvancedViewModels.UnitTests.Common;
 using FluentAssertions;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.ViewModelTests;
+namespace AdvancedViewModels.UnitTests.ViewModelTests;
 
 #nullable disable
 

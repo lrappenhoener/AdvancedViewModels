@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.Common;
+namespace AdvancedViewModels.UnitTests.Common;
 
 public class SampleViewModel : BaseViewModel
 {

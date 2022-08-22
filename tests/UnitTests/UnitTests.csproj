@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>PCC.Libraries.AdvancedViewModels.UnitTests</RootNamespace>
+        <RootNamespace>AdvancedViewModels.UnitTests</RootNamespace>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
 

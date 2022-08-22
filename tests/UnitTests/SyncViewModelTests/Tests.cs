@@ -1,8 +1,8 @@
+using AdvancedViewModels.UnitTests.Common;
 using FluentAssertions;
-using PCC.Libraries.AdvancedViewModels.UnitTests.Common;
 using Xunit;
 
-namespace PCC.Libraries.AdvancedViewModels.UnitTests.SyncViewModelTests;
+namespace AdvancedViewModels.UnitTests.SyncViewModelTests;
 
 public abstract class Tests
 {

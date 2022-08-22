@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace PCC.Libraries.AdvancedViewModels;
+namespace AdvancedViewModels;
 
 public class ReflectionSimpleProperties : SimpleProperties
 {

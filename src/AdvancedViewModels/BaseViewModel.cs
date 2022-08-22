@@ -2,7 +2,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PCC.Libraries.AdvancedViewModels;
+namespace AdvancedViewModels;
 
 public abstract class BaseViewModel : IComplexProperty
 {
@@ -110,7 +110,7 @@ public abstract class BaseViewModel : IComplexProperty
         return _simpleProperties.GetProperty<T>(propertyName);
     }
 
-    protected void SetComplexProperty(IComplexProperty complexProperty, [CallerMemberName] string propertyName = "")
+    protected void SetComplexProperty(IComplexProperty? complexProperty, [CallerMemberName] string propertyName = "")
     {
         _complexProperties.SetProperty(propertyName, complexProperty);
     }
