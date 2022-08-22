@@ -2,6 +2,11 @@
 
 Helper types to reduce boilerplate code for WPF MVVM applications, inspired by Thomas Claudius Huber's course "WPF and MVVM: Advanced Model Treatment"
 
+- INotifyPropertyChanged
+- INotifyCollectionChanged
+- Error Validation
+- Change tracking
+
 BaseViewModel Example:
 
 ```
@@ -36,6 +41,16 @@ public class SampleViewModel : BaseViewModel
         // listens for CollectionChanged events from Complex Collection
         set => SetComplexProperty(value);
     }
+    
+    // IsDirty { get; } == true when changes exist
+    
+    // AcceptChanges() accept changes, IsDirty false after operation
+    
+    // RejectChanges() revert changes, IsDirty false after operation
+    
+    // HasErrors { get; }
+    
+    // ErrorsChanged Event
 }
 
 ```
